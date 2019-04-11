@@ -27,27 +27,7 @@ namespace ConsoleApp2
 
         static void Main(string[] args)
         {
-            //HttpHeader header = new HttpHeader();
-            //header.accept = "text/html; charset=gb2312";
-            //header.contentType = "application/json;charset=utf-8";
-            //header.method = "POST";
-            //header.userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763";
-            //header.maxTry = 300;
-
-            //string html = HTMLHelper.GetHtml("http://kaijiang.500.com/shtml/qxc/04102.shtml", HTMLHelper.GetCooKie("http://kaijiang.500.com/shtml/qxc/04102.shtml",
-            //    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763", header), header);
-
-            //Console.WriteLine(html);
-
-
-            //Console.ReadLine();
-
-
-
-
-
-
-
+           
             Program cc = new Program();
             int a = 0;
            // SendRequestlichul();
