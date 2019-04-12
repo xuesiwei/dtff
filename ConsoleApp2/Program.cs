@@ -1,6 +1,7 @@
 ﻿
 using HtmlAgilityPack;
 using mshtml;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -11,10 +12,12 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 
 namespace ConsoleApp2
 {
@@ -24,15 +27,20 @@ namespace ConsoleApp2
         private static int _endedConnenctionCount = 0;
         private static int _failedConnectionCount = 0;
 
-
+   
         static void Main(string[] args)
         {
            
             Program cc = new Program();
             int a = 0;
-           // SendRequestlichul();
+          
+
+          
+            SendRequestplwduoxianc();
+            //SendRequestwms();
+            // SendRequestlichul();
             //SendRequestmengceproyIP();
-            SendRequest();
+            // SendRequest();
             // SendRequestproy();
             // SendRequestplw();
             // SendRequestmengce();
@@ -457,6 +465,221 @@ namespace ConsoleApp2
 
             }
             
+            catch (Exception ex)
+            {
+                // IncreaseFailedConnection();
+            }
+            //return content;
+
+        }
+        /// <summary>
+        /// 将json数据转换成实体类  
+        /// </summary>
+        /// <returns></returns>
+        private static List<Root> getObjectByJson(string jsonString)
+        {
+            // 实例化DataContractJsonSerializer对象，需要待序列化的对象类型
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<Root>));
+            //把Json传入内存流中保存
+            jsonString = "[" + jsonString + "]";
+            MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonString));
+            // 使用ReadObject方法反序列化成对象
+            object ob = serializer.ReadObject(stream);
+            List<Root> ls = (List<Root>)ob;
+            return ls;
+        }
+        private static void SendRequestwms()
+
+        {
+            try
+            {
+                    
+                  string ur = string.Empty;
+                for (int i = 1313; i < 1319; i++)
+                {
+                    string Url = "https://wapi.ai-cross.com/order/";
+                    string URL = Url + i;
+                    try { 
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
+                    request.Method = "GET";
+                    request.ContentType = "application/json;charset=utf-8";
+                        try
+                        {
+                            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                            Stream myResponseStream = response.GetResponseStream();
+                            StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
+                            string retString = myStreamReader.ReadToEnd().ToString();
+                            if (!string.IsNullOrEmpty(retString))
+                            {
+
+                                var ss = getObjectByJson(retString);
+                                int id = ss[0].datas.id;
+                                string order_buyer_regno = ss[0].datas.order_buyer_regno;
+                                string order_buyer_name = ss[0].datas.order_buyer_name;
+                                string order_buyer_idcard = ss[0].datas.order_buyer_idcard;
+                                string order_consignee = ss[0].datas.order_consignee;
+                                string order_consignee_tel = ss[0].datas.order_consignee_tel;
+                                string order_consignee_addr = ss[0].datas.order_consignee_addr;
+                                string order_actural_paid = ss[0].datas.order_actural_paid;
+                                string order_currency = ss[0].datas.order_currency;
+                                string order_express_no = ss[0].datas.order_express_no;
+                                string order_express = ss[0].datas.order_express;
+                             
+                                String str4 = "INSERT INTO orderInfo([id],[order_buyer_regno],[order_buyer_name],[order_buyer_idcard] ,[order_consignee] ,[order_consignee_tel]," +
+                                   "[order_consignee_addr],[order_actural_paid] ,[order_currency],[order_express_no],[order_express],[details],[url])VALUES" +
+                                   "('" + id + "','" + order_buyer_regno + "','" + order_buyer_name + "','" + order_buyer_idcard + "','" +
+                                   order_consignee + "','" + order_consignee_tel + "','" + order_consignee_addr + "','" + order_actural_paid + "','" +
+                                   order_currency + "','" + order_express_no + "','" + order_express + "','"+retString+ "','" + URL+"')";
+                                sqlconection r2 = new sqlconection();
+                                int d2 = r2.ExecuteUpdate(str4);
+                                Console.WriteLine(i);
+                                myStreamReader.Close();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }                     
+                     
+                    }
+                    catch (Exception ex) {  }
+                }
+         
+            }
+            catch (Exception ex)
+            {
+                
+            }     
+        }
+        private static void SendRequestplwduoxianc()
+
+        {
+            try
+            {
+                string ur = string.Empty;
+                string sql3 = "select MAX(id) as id ,max(qishu) as qishu from pailiewunak";
+                sqlconection r3 = new sqlconection();
+                DataTable d3 = new DataTable();
+                d3 = r3.ExecuteQuery(sql3);            
+                int id = Convert.ToInt16(d3.Rows[0]["id"]);
+                int qishuj = Convert.ToInt16(d3.Rows[0]["qishu"]);
+                for (int j = qishuj; j < 19094; j++)
+                {
+                    if (j >= 4000 & j < 10000)
+                    {
+                        ur = "0" + j + ".shtml";
+
+                        string uu = Convert.ToString(j).Substring(Convert.ToString(j).Length - 3, 3);
+                        if (Convert.ToInt32(uu) > 367)
+                        {
+                            continue;
+                        }
+
+                    }
+                    else
+                    {
+                        ur = j + ".shtml";
+                        string uu = Convert.ToString(j).Substring(Convert.ToString(j).Length - 3, 3);
+                        if (Convert.ToInt32(uu) > 367)
+                        {
+                            continue;
+                        }
+                    }
+
+                    id++;
+                    string Url = "http://kaijiang.500.com/shtml/plw/";
+                    string URL = Url + ur;
+                    ServicePointManager.DefaultConnectionLimit = 512;
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
+                    request.Method = "POST";
+                    request.ContentType = "application/json;charset=gb2312";
+                    // Stream myRequestStream = request.GetRequestStream();
+                    //StreamWriter myStreamWriter = new StreamWriter(myRequestStream, Encoding.GetEncoding("gb2312"));          
+                    // myStreamWriter.Close();
+                    try
+                    {
+                        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+
+                        Stream stm = new System.IO.Compression.GZipStream(response.GetResponseStream(), System.IO.Compression.CompressionMode.Decompress);
+                        StreamReader myStreamReader = new StreamReader(stm, Encoding.GetEncoding("gb2312"));
+
+                        string retString = myStreamReader.ReadToEnd();
+
+                        if (!string.IsNullOrEmpty(retString))
+                        {
+                            DateTime datetime;
+                            string html = retString.Replace("null(", "").Replace(")", "");
+                            List<string> info = GetHtmls("<tr>", "</tr>", html);
+
+                            string datails = ReplaceHtmlTag(info[4]).Replace("\t", "").Replace("\n", "").Replace("\r", "").Replace(" ", "").Trim();
+                            string strtempa = "第";
+                            string strtempb = "期开";
+                            int IndexofA = datails.IndexOf(strtempa);
+                            int IndexofB = datails.IndexOf(strtempb);
+                            string qishu = datails.Substring(IndexofA + 1, IndexofB - IndexofA - 1).Trim();
+                            string strtempc = "：";
+                            string strtempd = "兑奖";
+                            int IndexofC = datails.IndexOf(strtempc);
+                            int IndexofD = datails.IndexOf(strtempd);
+                            string datatime = datails.Substring(IndexofC + 1, IndexofD - IndexofC - 1).Trim();
+                            if (datatime.Contains("年"))
+                            {
+                                string[] tmp = datatime.Split('年');
+                                string Year = tmp[0];
+                                string stryear = "年";
+                                string strmouth = "月";
+                                int Indexofyear = datatime.IndexOf(stryear);
+                                int Indexofmouth = datatime.IndexOf(strmouth);
+                                string mouth = datatime.Substring(Indexofyear + 1, Indexofmouth - Indexofyear - 1).Trim();
+
+
+
+                                string strmouthe = "月";
+                                string strday = "日";
+                                int Indexofmouthe = datatime.IndexOf(strmouthe);
+                                int Indexofday = datatime.IndexOf(strday);
+                                string day = datatime.Substring(Indexofmouthe + 1, Indexofday - Indexofmouthe - 1).Trim();
+
+                                string numberDatetime = Year + "-" + mouth + "-" + day;
+                                datetime = Convert.ToDateTime(numberDatetime);
+                            }
+                            else
+                            {
+                                datetime = Convert.ToDateTime(datatime);
+                            }
+                            string number = ReplaceHtmlTag(info[5]).Replace("\t", "").Replace("\n", "").Replace("\r", "").Replace("\r0", "").Replace("r2", "").Replace("r3", "").Replace("r8", "").Replace("r9", "").Trim();
+                            string[] sArray = number.Split('：');
+                            string numbere = sArray[1];
+                            myStreamReader.Close();
+                            stm.Close();
+
+
+
+
+
+                            String str4 = "INSERT INTO pailiewunak([id],[qishu],[Datetime],[number] ,[details],[dream],[url])VALUES('" + id + "','" + qishu + "','" + datetime + "','" + numbere + "','" + datails + "','" + ' ' + "','" + URL + "')";
+
+                            sqlconection r2 = new sqlconection();
+                            int d2 = r2.ExecuteUpdate(str4);//执行后会有返回值，是int类型，如果执行失败会返回0；
+                            int d = 0;
+                            d++;
+                            int e = 0;
+                            e++;
+                            Console.WriteLine(id);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+
+
+                // IncreaseSuccessConnection();
+
+            }
+
             catch (Exception ex)
             {
                 // IncreaseFailedConnection();
