@@ -33,6 +33,7 @@ namespace ConsoleApp2
         /// </summary>
         public string order_consignee_tel { get; set; }
         /// <summary>
+        /// 
         /// 收货人地址
         /// </summary>
         public string order_consignee_addr { get; set; }
@@ -52,7 +53,12 @@ namespace ConsoleApp2
         /// 快递类型
         /// </summary>
         public string order_express { get; set; }
-       
+        /// <summary>
+        /// 下单时间
+        /// </summary>
+        public string create_time { get; set; }
+
+
     }
 
     public class Root

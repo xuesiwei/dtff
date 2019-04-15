@@ -36,13 +36,13 @@ namespace ConsoleApp2
           
 
           
-            SendRequestplwduoxianc();
-            //SendRequestwms();
-            // SendRequestlichul();
+            //SendRequestplwduoxianc();
+           // SendRequestwms();
+             SendRequestlichul();
             //SendRequestmengceproyIP();
-            // SendRequest();
+             //SendRequestqxc();
             // SendRequestproy();
-            // SendRequestplw();
+             //SendRequestplw();
             // SendRequestmengce();
             Console.Read();
 
@@ -89,7 +89,7 @@ namespace ConsoleApp2
             Reset();
             for (var i = 0; i < connectionCount; i++)
             {
-                ThreadPool.QueueUserWorkItem(u => SendRequest());
+                ThreadPool.QueueUserWorkItem(u => SendRequestqxc());
             }
         }
 
@@ -301,15 +301,19 @@ namespace ConsoleApp2
             try
             {
                 string ur = string.Empty;
-                string sql3 = "select top 400 left(number,4) as number,url from pailiewu order by Datetime desc ";
+                string sql3 = "select top 300 left(number,4) as number from qixingcai order by Datetime desc ";
                 sqlconection r3 = new sqlconection();
                 DataTable d3 = new DataTable();
                 d3 = r3.ExecuteQuery(sql3);
-                var rowssm = d3.Rows.Cast<DataRow>().Select(x => new { a = x.Field<string>("number"),b = x.Field<string>("url")});
+
+               // var rowssm = d3.Rows.Cast<DataRow>().Select(x => new { a = x.Field<string>("number"),b = x.Field<string>("url")});
+                var rowssm = d3.Rows.Cast<DataRow>().Select(x => new { a = x.Field<string>("number")});
                 List<int> mList = new List<int>();
                 var exce = new List<int>();
                 List<int> mList100 = new List<int>();
-                for(int i=0;i<100;i++ )
+                List<int> mListthesame= new List<int>();
+                int thesame = 0;
+                for (int i=0;i<100;i++ )
                 {
                     mList100.Add(i);
                 }
@@ -325,7 +329,9 @@ namespace ConsoleApp2
                     }
                     catch(Exception ex)
                     {
-                        Console.WriteLine("{0},{1}",item.a,item.b);                    }
+                        //Console.WriteLine("{0},{1}",item.a,item.b);
+                        Console.WriteLine("{0}", item.a);
+                    }
                 }
 
                 foreach (var str1 in mList100)
@@ -333,14 +339,25 @@ namespace ConsoleApp2
                     if (!mList.Contains(str1))
                     {
                         exce.Add(str1);
+                       
                     }
                     else
                     {
+                        mListthesame.Add(str1);
+                        if (mListthesame.Contains(str1))
+                        {
+                            thesame++;
+                        }
+                        Console.WriteLine("{0},{1}", str1, thesame);
                         continue;
                     }
                 }
 
-             
+                for (int i = 0; i <exce.Count; i++)
+                {
+                    Console.WriteLine("未开:{0}",exce[i]);
+                }
+
             }
 
             catch (Exception ex)
@@ -349,7 +366,7 @@ namespace ConsoleApp2
             }        
 
         }
-        private static void SendRequest()
+        private static void SendRequestqxc()
 
         {
             try
@@ -360,7 +377,7 @@ namespace ConsoleApp2
                 d3 = r3.ExecuteQuery(sql3);
                 int id = Convert.ToInt16(d3.Rows[0]["id"]);   
                 int qishuj = Convert.ToInt16(d3.Rows[0]["qishu"]);
-                for (int j = qishuj; j <qishuj+1; j++)
+                for (int j = qishuj; j <qishuj+3; j++)
                 {
                     if (j >= 8000 & j < 10000)
                     {
@@ -439,14 +456,17 @@ namespace ConsoleApp2
                             string number = ReplaceHtmlTag(info[5]).Replace("\t", "").Replace("\n", "").Replace("\r", "").Replace("\r0", "").Replace("r2", "").Replace("r3", "").Replace("r8", "").Replace("r9", "").Trim();
                             string[] sArray = number.Split('：');
                             string numbere = sArray[1];
+                          
+
+                            string sql6 = "SELECT dream FROM mengce where number=left("+numbere+",4)";
+                            sqlconection r6 = new sqlconection();
+                            DataTable d6 = new DataTable();
+                            d6= r6.ExecuteQuery(sql6);                         
+                            string dream= d6.Rows[0]["dream"].ToString();
+
                             myStreamReader.Close();
                             stm.Close();
-
-
-
-
-
-                            String str4 = "INSERT INTO qixingcai([id],[qishu],[Datetime],[number] ,[details],[dream])VALUES('" + id + "','" + qishu + "','" + datetime + "','" + numbere + "','" + datails + "','" + ' ' + "')";
+                            String str4 = "INSERT INTO qixingcai([id],[qishu],[Datetime],[number] ,[details],[dream])VALUES('" + id + "','" + qishu + "','" + datetime + "','" + numbere + "','" + datails + "','" + dream + "')";
 
                             sqlconection r2 = new sqlconection();
                             int d2 = r2.ExecuteUpdate(str4);//执行后会有返回值，是int类型，如果执行失败会返回0；
@@ -495,7 +515,7 @@ namespace ConsoleApp2
             {
                     
                   string ur = string.Empty;
-                for (int i = 1313; i < 1319; i++)
+                for (int i = 1322; i < 1323; i++)
                 {
                     string Url = "https://wapi.ai-cross.com/order/";
                     string URL = Url + i;
@@ -524,12 +544,12 @@ namespace ConsoleApp2
                                 string order_currency = ss[0].datas.order_currency;
                                 string order_express_no = ss[0].datas.order_express_no;
                                 string order_express = ss[0].datas.order_express;
-                             
+                                DateTime? create_time =Convert.ToDateTime(ss[0].datas.create_time);
                                 String str4 = "INSERT INTO orderInfo([id],[order_buyer_regno],[order_buyer_name],[order_buyer_idcard] ,[order_consignee] ,[order_consignee_tel]," +
-                                   "[order_consignee_addr],[order_actural_paid] ,[order_currency],[order_express_no],[order_express],[details],[url])VALUES" +
+                                   "[order_consignee_addr],[order_actural_paid] ,[order_currency],[order_express_no],[order_express],[details],[url],[create_time])VALUES" +
                                    "('" + id + "','" + order_buyer_regno + "','" + order_buyer_name + "','" + order_buyer_idcard + "','" +
                                    order_consignee + "','" + order_consignee_tel + "','" + order_consignee_addr + "','" + order_actural_paid + "','" +
-                                   order_currency + "','" + order_express_no + "','" + order_express + "','"+retString+ "','" + URL+"')";
+                                   order_currency + "','" + order_express_no + "','" + order_express + "','"+retString+ "','" + URL+ "','"+ create_time + "')";
                                 sqlconection r2 = new sqlconection();
                                 int d2 = r2.ExecuteUpdate(str4);
                                 Console.WriteLine(i);
@@ -699,7 +719,7 @@ namespace ConsoleApp2
                 d3 = r3.ExecuteQuery(sql3);
                 int id = Convert.ToInt16(d3.Rows[0]["id"]);
                 int qishuj=Convert.ToInt16(d3.Rows[0]["qishu"]);
-                for (int j= qishuj; j <qishuj+1; j++)
+                for (int j= qishuj; j <qishuj+10; j++)
                 {
                     if (j >= 8200 & j < 10000)
                     {
