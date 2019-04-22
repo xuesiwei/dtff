@@ -31,18 +31,61 @@ namespace ConsoleApp2
         static void Main(string[] args)
         {
            
-            Program cc = new Program();
-            int a = 0;
-          
 
-          
+             Program cc = new Program();
+             int a = 0;
+            string path = "E:\\微信对账单.txt";
+            //cc.ReadTxtContent(path);
+            //SendRequestHwUserinfo();
+            // string url11 = "https://www.bilibili.com/video/av49401880";
+            // cc.SaveAsWebImg(url11);
             //SendRequestplwduoxianc();
-           // SendRequestwms();
-             SendRequestlichul();
+            //Thread thread25yi = new Thread(new ThreadStart(obj.SendRequestqxc));
+            //thread25yi.Start();
+            //void MethodTimer1()
+            //{
+            //    while (true)
+            //    {
+            //        Console.WriteLine(DateTime.Now.ToString() + "_" + thread25yi.CurrentThread.ManagedThreadId.ToString());
+            //        thread25yi.CurrentThread.Join(100);//阻止设定时间 
+            //    }
+            //}
+            // SendRequestwms();
+
+            int temp = 0;
+            int[] arr = { 23, 44, 66, 76, 98, 11, 3, 9, 7 };
+            Console.WriteLine("排序前的数组：");
+            foreach (int item in arr)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine();
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                for (int j = 0; j < arr.Length - 1 - i; j++)
+                {
+                    if (arr[j] > arr[j + 1])
+                    {
+                        temp = arr[j + 1];
+                        arr[j + 1] = arr[j];
+                        arr[j] = temp;
+                    }
+                }
+            }
+            Console.WriteLine("排序后的数组：");
+            foreach (int item in arr)
+            {
+                Console.WriteLine(item + "");
+            }
+            Console.WriteLine();
+            Console.ReadKey();
+
+
+            // SendRequestlichul();
             //SendRequestmengceproyIP();
-             //SendRequestqxc();
+            // SendRequestqxc();
             // SendRequestproy();
-             //SendRequestplw();
+            //SendRequestplw();
             // SendRequestmengce();
             Console.Read();
 
@@ -74,7 +117,26 @@ namespace ConsoleApp2
 
           //  }
         }
-        private static void IncreaseFailedConnection()
+        //冒泡排序方法，从小到大排，虽然很多冒泡排序都是从大到小，
+        //可是我就想这么排，你能怎么着我。
+        public void PopSort(int[] list)
+        {
+            int i, j, temp;  //先定义一下要用的变量
+            for (i = 0; i < list.Length - 1; i++)
+            {
+                for (j = i + 1; j < list.Length; j++)
+                {
+                    if (list[i] > list[j]) //如果第二个小于第一个数
+                    {
+                        //交换两个数的位置，在这里你也可以单独写一个交换方法，在此调用就行了
+                        temp = list[i]; //把大的数放在一个临时存储位置
+                        list[i] = list[j]; //然后把小的数赋给前一个，保证每趟排序前面的最小
+                        list[j] = temp; //然后把临时位置的那个大数赋给后一个
+                    }
+                }
+            }
+        }
+            private static void IncreaseFailedConnection()
         {
             Interlocked.Increment(ref _failedConnectionCount);
             Console.WriteLine("失败个数：" + _failedConnectionCount);
@@ -301,7 +363,7 @@ namespace ConsoleApp2
             try
             {
                 string ur = string.Empty;
-                string sql3 = "select top 300 left(number,4) as number from qixingcai order by Datetime desc ";
+                string sql3 = "select top 130 left(number,4) as number from qixingcai order by Datetime desc ";
                 sqlconection r3 = new sqlconection();
                 DataTable d3 = new DataTable();
                 d3 = r3.ExecuteQuery(sql3);
@@ -508,6 +570,121 @@ namespace ConsoleApp2
             List<Root> ls = (List<Root>)ob;
             return ls;
         }
+
+        /// <summary>
+        /// 将json数据转换成实体类  
+        /// </summary>
+        /// <returns></returns>
+        private static List<HwUserInfo> getObjectByJsonHwUserInfo(string jsonString)
+        {
+            // 实例化DataContractJsonSerializer对象，需要待序列化的对象类型
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<HwUserInfo>));
+            //把Json传入内存流中保存
+            jsonString = "[" + jsonString + "]";
+            MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonString));
+            // 使用ReadObject方法反序列化成对象
+            object ob = serializer.ReadObject(stream);
+            List<HwUserInfo> ls = (List<HwUserInfo>)ob;
+            return ls;
+        }
+        /// <summary>
+        /// 读取txt文件内容
+        /// </summary>
+        /// <param name="Path">文件地址</param>
+        ///
+        string path = "E:\\微信对账单.txt";
+        public void ReadTxtContent(string Path)
+        {
+          
+            string []content=File.ReadAllLines(Path,Encoding.Default);
+
+            foreach(var item in content)
+            {
+                string 表头 = content[0];
+            }
+          
+          // string tradeMsg = content.su(content.IndexOf("`"));
+            
+        }
+        private static void SendRequestHwUserinfo()
+
+        {
+            try
+            {
+
+                string ur = string.Empty;
+                for (int i = 1; i < 1559; i++)
+                {
+                    string Url = "http://zmtyf.360jlb.cn/admin/rest/user/list?&mid=-1990&page="+i+"&beginTime=0";
+                   
+                    try
+                    {
+                        string cookieStr = "S_ID=7NYW1553849630857WI7FIA443CJUXQAJRM77P8VYX7JF; route=3d6b021b81f47d01488401546cf24ed6; U_ID=37cd1cb8c21e397ba6f2a131e2bbe3a9; U_CRTDATE=1555573367074; U_SIG=a830f5498172afbb8243c176b5434a39";
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
+                        request.Method = "POST";
+                        request.ContentType = "application/x-www-form-urlencoded";
+                        request.Headers.Add("Cookie", cookieStr);
+                        try
+                        {
+                            HttpWebResponse response = (HttpWebResponse)request.GetResponse();                                                 
+                            Stream myResponseStream = response.GetResponseStream();
+                            StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
+                            string retString = myStreamReader.ReadToEnd().ToString();
+                            if (!string.IsNullOrEmpty(retString))
+                            {
+                                var ss = getObjectByJsonHwUserInfo(retString);
+                                 foreach( var item in ss[0].result.list)
+                                {
+                                    int userid = item.user.id;
+                                    string email = item.user.email;
+                                    string phone = item.user.phone;
+                                    string nickname = item.user.nickname;
+                                    string trueName = item.userExt.trueName;
+                                    string identityCode = item.userExt.identityCode;
+                                    string sex = item.userExt.sex;
+                                    switch (sex)
+                                    {
+                                        case "M":
+                                            sex = "男";
+                                            break;
+                                        case "F":
+                                            sex = "女";
+                                            break;
+                                         case "U":
+                                            sex = "未知";
+                                            break;                                       
+                                    }
+                                    string emergencyContactPerson = item.userExt.emergencyContactPerson;
+                                    string emergencyContactPhone = item.userExt.emergencyContactPhone;
+                                    int birthdayTime = item.userExt.birthdayTime;
+                                    string resultjson= Newtonsoft.Json.JsonConvert.SerializeObject(item);
+                                    String str4 = "INSERT INTO HwUserInfo([userid],[email],[phone],[nickname] ,[trueName] ,[identityCode]," +
+                                       "[sex],[emergencyContactPerson] ,[emergencyContactPhone],[birthdayTime],[resultjson],[url])VALUES" +
+                                       "('" + userid + "','" + email + "','" + phone + "','" + nickname + "','" +
+                                       trueName + "','" + identityCode + "','" + sex + "','" + emergencyContactPerson + "','" +
+                                       emergencyContactPhone + "','" + birthdayTime + "','" + resultjson + "','" + Url + "')";
+                                    sqlconection r2 = new sqlconection();
+                                     int d2 = r2.ExecuteUpdate(str4);
+                                    Console.WriteLine(i);
+                                    myStreamReader.Close();
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+
+                    }
+                    catch (Exception ex) { }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
         private static void SendRequestwms()
 
         {
@@ -515,7 +692,7 @@ namespace ConsoleApp2
             {
                     
                   string ur = string.Empty;
-                for (int i = 1322; i < 1323; i++)
+                for (int i = 1347; i < 1351; i++)
                 {
                     string Url = "https://wapi.ai-cross.com/order/";
                     string URL = Url + i;
@@ -706,6 +883,28 @@ namespace ConsoleApp2
             }
             //return content;
 
+        }
+      
+    
+    public string SaveAsWebImg(string picUrl)
+        {
+            string result = "";
+            string path = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + @"File";  //目录 
+            try
+            {
+                if (!String.IsNullOrEmpty(picUrl))
+                {
+                    Random rd = new Random();
+                    DateTime nowTime = DateTime.Now;
+                    string fileName = nowTime.Month.ToString() + nowTime.Day.ToString() + nowTime.Hour.ToString() + nowTime.Minute.ToString() + nowTime.Second.ToString() + rd.Next(1000, 1000000) + ".mp4";
+                    WebClient webClient = new WebClient();
+                    webClient.DownloadFile(picUrl, path + fileName);
+                    result = fileName;
+                    Console.WriteLine(result);
+                }
+            }
+            catch(Exception ex) { }
+            return result;
         }
         private static void SendRequestplw()
 
