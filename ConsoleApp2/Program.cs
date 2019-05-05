@@ -18,7 +18,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-
+using Log;
 namespace ConsoleApp2
 {
     public class Program
@@ -27,16 +27,15 @@ namespace ConsoleApp2
         private static int _endedConnenctionCount = 0;
         private static int _failedConnectionCount = 0;
 
-   
         static void Main(string[] args)
         {
-           
 
-             Program cc = new Program();
-             int a = 0;
+            Program cc = new Program();
+            int a = 0;
             string path = "E:\\微信对账单.txt";
             //cc.ReadTxtContent(path);
-            //SendRequestHwUserinfo();
+            //  SendRequestHwUserinfo();
+            //  SendRequestqqmemberssss();
             // string url11 = "https://www.bilibili.com/video/av49401880";
             // cc.SaveAsWebImg(url11);
             //SendRequestplwduoxianc();
@@ -50,72 +49,44 @@ namespace ConsoleApp2
             //        thread25yi.CurrentThread.Join(100);//阻止设定时间 
             //    }
             //}
-            // SendRequestwms();
+            //  SendRequestwms();
 
-            int temp = 0;
-            int[] arr = { 23, 44, 66, 76, 98, 11, 3, 9, 7 };
-            Console.WriteLine("排序前的数组：");
-            foreach (int item in arr)
-            {
-                Console.WriteLine(item);
-            }
-            Console.WriteLine();
-            for (int i = 0; i < arr.Length - 1; i++)
-            {
-                for (int j = 0; j < arr.Length - 1 - i; j++)
-                {
-                    if (arr[j] > arr[j + 1])
-                    {
-                        temp = arr[j + 1];
-                        arr[j + 1] = arr[j];
-                        arr[j] = temp;
-                    }
-                }
-            }
-            Console.WriteLine("排序后的数组：");
-            foreach (int item in arr)
-            {
-                Console.WriteLine(item + "");
-            }
-            Console.WriteLine();
-            Console.ReadKey();
-
-
+        
             // SendRequestlichul();
             //SendRequestmengceproyIP();
             // SendRequestqxc();
             // SendRequestproy();
-            //SendRequestplw();
+           // SendRequestplw();
             // SendRequestmengce();
             Console.Read();
-
+            return;
             //while (true)
             //{
             //    a++;
             //    var connectionCount = 1000;
             //    var requestThread = new Thread(() => StartRequest(connectionCount)) { IsBackground = true };
             //    requestThread.Start();
-              
-
-                //Parallel.Invoke(() =>
-                //{
-                //    a++;
-                //    var connectionCount = 1000;
-                //    var requestThread = new Thread(() => StartRequest(connectionCount)) { IsBackground = true };
-                //    requestThread.Start();
-                //    Console.WriteLine(a);
-                //});
 
 
-                // Console.WriteLine("恭喜，成功完成！");
-                // Console.ReadLine();
+            //Parallel.Invoke(() =>
+            //{
+            //    a++;
+            //    var connectionCount = 1000;
+            //    var requestThread = new Thread(() => StartRequest(connectionCount)) { IsBackground = true };
+            //    requestThread.Start();
+            //    Console.WriteLine(a);
+            //});
 
 
-                //  GC.Collect();
-                //  }
-                // }
+            // Console.WriteLine("恭喜，成功完成！");
+            // Console.ReadLine();
 
-          //  }
+
+            //  GC.Collect();
+            //  }
+            // }
+
+            //  }
         }
         //冒泡排序方法，从小到大排，虽然很多冒泡排序都是从大到小，
         //可是我就想这么排，你能怎么着我。
@@ -136,7 +107,7 @@ namespace ConsoleApp2
                 }
             }
         }
-            private static void IncreaseFailedConnection()
+        private static void IncreaseFailedConnection()
         {
             Interlocked.Increment(ref _failedConnectionCount);
             Console.WriteLine("失败个数：" + _failedConnectionCount);
@@ -162,34 +133,34 @@ namespace ConsoleApp2
             _endedConnenctionCount = 0;
             _totalTimeCost = 0;
         }
-       private static void see( )
+        private static void see()
+        {
+            try
             {
-                try
+                HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
+                Encoding encoder = Encoding.GetEncoding("gb2312");
+                htmlDoc.Load("http://kaijiang.500.com/shtml/qxc/04102.shtml", encoder);
+                HtmlWeb webClient = new HtmlWeb();
+                HtmlAgilityPack.HtmlDocument doc = webClient.Load("http://kaijiang.500.com/shtml/qxc/04102.shtml");
+
+                HtmlNodeCollection hrefList = doc.DocumentNode.SelectNodes(".//a[@href]");
+
+                if (hrefList != null)
                 {
-                    HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
-                    Encoding encoder = Encoding.GetEncoding("gb2312");
-                    htmlDoc.Load("http://kaijiang.500.com/shtml/qxc/04102.shtml", encoder);
-                    HtmlWeb webClient = new HtmlWeb();
-                    HtmlAgilityPack.HtmlDocument doc = webClient.Load("http://kaijiang.500.com/shtml/qxc/04102.shtml");
-
-                    HtmlNodeCollection hrefList = doc.DocumentNode.SelectNodes(".//a[@href]");
-
-                    if (hrefList != null)
+                    foreach (HtmlNode href in hrefList)
                     {
-                        foreach (HtmlNode href in hrefList)
-                        {
-                            HtmlAttribute att = href.Attributes["href"];
-                            Console.WriteLine(att.Value);
-
-                        }
+                        HtmlAttribute att = href.Attributes["href"];
+                        Console.WriteLine(att.Value);
 
                     }
-                }
-                catch (Exception ex)
-                {
 
                 }
             }
+            catch (Exception ex)
+            {
+
+            }
+        }
         public static List<string> GetHtmls(string start, string end, string html)
         {
             List<string> list = new List<string>();
@@ -221,14 +192,14 @@ namespace ConsoleApp2
         }
         private static void SendRequest3()
         {
-            int Result=0;
+            int Result = 0;
             for (int i = 0; i < 10000; i++)
             {
                 System.Random Random = new System.Random();
-                 Result = Random.Next(0, 9999);
+                Result = Random.Next(0, 9999);
                 Console.WriteLine(Result);
             }
-         
+
         }
         private static void SendRequestproy()
 
@@ -237,13 +208,13 @@ namespace ConsoleApp2
             {
                 string ur = string.Empty;
 
-               string Url = "http://kaijiang.500.com/shtml/plw/04010.shtml";
+                string Url = "http://kaijiang.500.com/shtml/plw/04010.shtml";
 
                 //string Url = "http://192.168.0.242/admin/";
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
 
 
-              
+
                 request.Method = "GET";
                 request.ContentType = "application/json;charset=utf-8";
 
@@ -254,7 +225,7 @@ namespace ConsoleApp2
                 request.UseDefaultCredentials = true;
                 request.Proxy = proxy;
 
-               
+
 
                 try
                 {
@@ -274,22 +245,13 @@ namespace ConsoleApp2
                     Console.WriteLine(ex);
                     return;
                 }
-
-             
             }
-
-            
-
             // IncreaseSuccessConnection();
-
-
-
             catch (Exception ex)
             {
                 // IncreaseFailedConnection();
             }
             //return content;
-
         }
         private static void SendRequestmengceproyIP()
 
@@ -298,64 +260,52 @@ namespace ConsoleApp2
             {
                 string ur = string.Empty;
                 int id = 1;
-              
-                
-                    id++;
-                    string Url = "https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list?tdsourcetag=s_pcqq_aiomsg";
-                 
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
-                    request.Method = "GET";
-                    request.ContentType = "application/json;charset=gb2312";
-                    // Stream myRequestStream = request.GetRequestStream();
-                    //StreamWriter myStreamWriter = new StreamWriter(myRequestStream, Encoding.GetEncoding("gb2312"));          
-                    // myStreamWriter.Close();
-                    try
+
+
+                id++;
+                string Url = "https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list?tdsourcetag=s_pcqq_aiomsg";
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
+                request.Method = "GET";
+                request.ContentType = "application/json;charset=gb2312";
+                // Stream myRequestStream = request.GetRequestStream();
+                //StreamWriter myStreamWriter = new StreamWriter(myRequestStream, Encoding.GetEncoding("gb2312"));          
+                // myStreamWriter.Close();
+                try
+                {
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                    Stream myResponseStream = response.GetResponseStream();
+                    StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("gb2312"));
+                    string retString = myStreamReader.ReadToEnd();
+                    if (!string.IsNullOrEmpty(retString))
                     {
-                        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-                        Stream myResponseStream = response.GetResponseStream();
-                        StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("gb2312"));
-
-                        string retString = myStreamReader.ReadToEnd();
-
-                        if (!string.IsNullOrEmpty(retString))
+                        DateTime datetime;
+                        string html = retString.Replace("null(", "").Replace(")", "");
+                        List<string> info = GetHtmls("export_address", "host", html);
+                        if (info != null)
                         {
-                            DateTime datetime;
-                            string html = retString.Replace("null(", "").Replace(")", "");
-                            List<string> info = GetHtmls("export_address", "host", html);
-                            if (info != null)
-                            {
-                                string datails = ReplaceHtmlTag(info[0]).Replace("\t", "").Replace("\r", "").Replace(" ", "").Trim();
-
-
-
-                                String str4 = "INSERT INTO mengce([id],[number],[dream],[url])VALUES('" + id + "','" +  datails + "')";
-
-                                sqlconection r2 = new sqlconection();
-                                int d2 = r2.ExecuteUpdate(str4);//执行后会有返回值，是int类型，如果执行失败会返回0；
-                                int d = 0;
-                                d++;
-                                int e = 0;
-                                e++;
-                                Console.WriteLine(id);
-                            }
-                            myStreamReader.Close();
+                            string datails = ReplaceHtmlTag(info[0]).Replace("\t", "").Replace("\r", "").Replace(" ", "").Trim();
+                            String str4 = "INSERT INTO mengce([id],[number],[dream],[url])VALUES('" + id + "','" + datails + "')";
+                            sqlconection r2 = new sqlconection();
+                            int d2 = r2.ExecuteUpdate(str4);//执行后会有返回值，是int类型，如果执行失败会返回0；
+                            int d = 0;
+                            d++;
+                            int e = 0;
+                            e++;
+                            Console.WriteLine(id);
                         }
+                        myStreamReader.Close();
                     }
-                    catch (Exception ex) { }
-                
-
-
+                }
+                catch (Exception ex) { }
                 // IncreaseSuccessConnection();
-
             }
-
             catch (Exception ex)
             {
                 // IncreaseFailedConnection();
             }
             //return content;
-
         }
         private static void SendRequestlichul()
 
@@ -363,19 +313,20 @@ namespace ConsoleApp2
             try
             {
                 string ur = string.Empty;
-                string sql3 = "select top 130 left(number,4) as number from qixingcai order by Datetime desc ";
+                // string sql3 = "select top 130 left(number,4) as number from qixingcai order by Datetime desc ";
+                string sql3 = "select top 130 left(number,4) as number from pailiewu order by Datetime desc ";
                 sqlconection r3 = new sqlconection();
                 DataTable d3 = new DataTable();
                 d3 = r3.ExecuteQuery(sql3);
 
-               // var rowssm = d3.Rows.Cast<DataRow>().Select(x => new { a = x.Field<string>("number"),b = x.Field<string>("url")});
-                var rowssm = d3.Rows.Cast<DataRow>().Select(x => new { a = x.Field<string>("number")});
+                // var rowssm = d3.Rows.Cast<DataRow>().Select(x => new { a = x.Field<string>("number"),b = x.Field<string>("url")});
+                var rowssm = d3.Rows.Cast<DataRow>().Select(x => new { a = x.Field<string>("number") });
                 List<int> mList = new List<int>();
                 var exce = new List<int>();
                 List<int> mList100 = new List<int>();
-                List<int> mListthesame= new List<int>();
+                List<int> mListthesame = new List<int>();
                 int thesame = 0;
-                for (int i=0;i<100;i++ )
+                for (int i = 0; i < 100; i++)
                 {
                     mList100.Add(i);
                 }
@@ -389,19 +340,18 @@ namespace ConsoleApp2
                         int num = Convert.ToInt32(um);
                         mList.Add(num);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         //Console.WriteLine("{0},{1}",item.a,item.b);
                         Console.WriteLine("{0}", item.a);
                     }
                 }
-
                 foreach (var str1 in mList100)
                 {
                     if (!mList.Contains(str1))
                     {
                         exce.Add(str1);
-                       
+
                     }
                     else
                     {
@@ -414,32 +364,31 @@ namespace ConsoleApp2
                         continue;
                     }
                 }
-
-                for (int i = 0; i <exce.Count; i++)
+                for (int i = 0; i < exce.Count; i++)
                 {
-                    Console.WriteLine("未开:{0}",exce[i]);
+
+                    Console.WriteLine("未开:{0}", exce[i]);
+                    Log1 gg = new Log1();
+                    gg.WriteLine(Convert.ToString(exce[i]));
                 }
-
             }
-
             catch (Exception ex)
             {
                 // IncreaseFailedConnection();
-            }        
-
+            }
         }
         private static void SendRequestqxc()
 
         {
             try
-            {    string ur = string.Empty;
+            { string ur = string.Empty;
                 string sql3 = "select MAX(id) as id ,max(qishu) as qishu from qixingcai";
                 sqlconection r3 = new sqlconection();
                 DataTable d3 = new DataTable();
                 d3 = r3.ExecuteQuery(sql3);
-                int id = Convert.ToInt16(d3.Rows[0]["id"]);   
+                int id = Convert.ToInt16(d3.Rows[0]["id"]);
                 int qishuj = Convert.ToInt16(d3.Rows[0]["qishu"]);
-                for (int j = qishuj; j <qishuj+3; j++)
+                for (int j = qishuj; j < qishuj + 3; j++)
                 {
                     if (j >= 8000 & j < 10000)
                     {
@@ -450,7 +399,6 @@ namespace ConsoleApp2
                         {
                             continue;
                         }
-
                     }
                     else
                     {
@@ -461,7 +409,6 @@ namespace ConsoleApp2
                             continue;
                         }
                     }
-
                     id++;
                     string Url = "http://kaijiang.500.com/shtml/qxc/";
                     string URL = Url + ur;
@@ -474,18 +421,13 @@ namespace ConsoleApp2
                     try
                     {
                         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-
                         Stream stm = new System.IO.Compression.GZipStream(response.GetResponseStream(), System.IO.Compression.CompressionMode.Decompress);
                         StreamReader myStreamReader = new StreamReader(stm, Encoding.GetEncoding("gb2312"));
-
                         string retString = myStreamReader.ReadToEnd();
-
                         if (!string.IsNullOrEmpty(retString))
                         {
                             string html = retString.Replace("null(", "").Replace(")", "");
                             List<string> info = GetHtmls("<tr>", "</tr>", html);
-                           
                             string datails = ReplaceHtmlTag(info[4]).Replace("\t", "").Replace("\n", "").Replace("\r", "").Trim();
                             string strtempa = "第";
                             string strtempb = "期开";
@@ -518,13 +460,13 @@ namespace ConsoleApp2
                             string number = ReplaceHtmlTag(info[5]).Replace("\t", "").Replace("\n", "").Replace("\r", "").Replace("\r0", "").Replace("r2", "").Replace("r3", "").Replace("r8", "").Replace("r9", "").Trim();
                             string[] sArray = number.Split('：');
                             string numbere = sArray[1];
-                          
 
-                            string sql6 = "SELECT dream FROM mengce where number=left("+numbere+",4)";
+
+                            string sql6 = "SELECT dream FROM mengce where number=left(" + numbere + ",4)";
                             sqlconection r6 = new sqlconection();
                             DataTable d6 = new DataTable();
-                            d6= r6.ExecuteQuery(sql6);                         
-                            string dream= d6.Rows[0]["dream"].ToString();
+                            d6 = r6.ExecuteQuery(sql6);
+                            string dream = d6.Rows[0]["dream"].ToString();
 
                             myStreamReader.Close();
                             stm.Close();
@@ -541,12 +483,12 @@ namespace ConsoleApp2
                     }
                     catch (Exception ex) { Console.WriteLine(j); Console.WriteLine(URL); }
                 }
-                
+
 
                 // IncreaseSuccessConnection();
 
             }
-            
+
             catch (Exception ex)
             {
                 // IncreaseFailedConnection();
@@ -570,7 +512,22 @@ namespace ConsoleApp2
             List<Root> ls = (List<Root>)ob;
             return ls;
         }
-
+        /// <summary>
+        /// 将json数据转换成实体类  
+        /// </summary>
+        /// <returns></returns>
+        private static List<Rootqq> getObjectByJsonqqmodel(string jsonString)
+        {
+            // 实例化DataContractJsonSerializer对象，需要待序列化的对象类型
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<Rootqq>));
+            //把Json传入内存流中保存
+            jsonString = "[" + jsonString + "]";
+            MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonString));
+            // 使用ReadObject方法反序列化成对象
+            object ob = serializer.ReadObject(stream);
+            List<Rootqq> ls = (List<Rootqq>)ob;
+            return ls;
+        }
         /// <summary>
         /// 将json数据转换成实体类  
         /// </summary>
@@ -595,16 +552,16 @@ namespace ConsoleApp2
         string path = "E:\\微信对账单.txt";
         public void ReadTxtContent(string Path)
         {
-          
-            string []content=File.ReadAllLines(Path,Encoding.Default);
 
-            foreach(var item in content)
+            string[] content = File.ReadAllLines(Path, Encoding.Default);
+
+            foreach (var item in content)
             {
                 string 表头 = content[0];
             }
-          
-          // string tradeMsg = content.su(content.IndexOf("`"));
-            
+
+            // string tradeMsg = content.su(content.IndexOf("`"));
+
         }
         private static void SendRequestHwUserinfo()
 
@@ -615,8 +572,8 @@ namespace ConsoleApp2
                 string ur = string.Empty;
                 for (int i = 1; i < 1559; i++)
                 {
-                    string Url = "http://zmtyf.360jlb.cn/admin/rest/user/list?&mid=-1990&page="+i+"&beginTime=0";
-                   
+                    string Url = "http://zmtyf.360jlb.cn/admin/rest/user/list?&mid=-1990&page=" + i + "&beginTime=0";
+
                     try
                     {
                         string cookieStr = "S_ID=7NYW1553849630857WI7FIA443CJUXQAJRM77P8VYX7JF; route=3d6b021b81f47d01488401546cf24ed6; U_ID=37cd1cb8c21e397ba6f2a131e2bbe3a9; U_CRTDATE=1555573367074; U_SIG=a830f5498172afbb8243c176b5434a39";
@@ -626,14 +583,14 @@ namespace ConsoleApp2
                         request.Headers.Add("Cookie", cookieStr);
                         try
                         {
-                            HttpWebResponse response = (HttpWebResponse)request.GetResponse();                                                 
+                            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                             Stream myResponseStream = response.GetResponseStream();
                             StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
                             string retString = myStreamReader.ReadToEnd().ToString();
                             if (!string.IsNullOrEmpty(retString))
                             {
                                 var ss = getObjectByJsonHwUserInfo(retString);
-                                 foreach( var item in ss[0].result.list)
+                                foreach (var item in ss[0].result.list)
                                 {
                                     int userid = item.user.id;
                                     string email = item.user.email;
@@ -650,21 +607,21 @@ namespace ConsoleApp2
                                         case "F":
                                             sex = "女";
                                             break;
-                                         case "U":
+                                        case "U":
                                             sex = "未知";
-                                            break;                                       
+                                            break;
                                     }
                                     string emergencyContactPerson = item.userExt.emergencyContactPerson;
                                     string emergencyContactPhone = item.userExt.emergencyContactPhone;
                                     int birthdayTime = item.userExt.birthdayTime;
-                                    string resultjson= Newtonsoft.Json.JsonConvert.SerializeObject(item);
+                                    string resultjson = Newtonsoft.Json.JsonConvert.SerializeObject(item);
                                     String str4 = "INSERT INTO HwUserInfo([userid],[email],[phone],[nickname] ,[trueName] ,[identityCode]," +
                                        "[sex],[emergencyContactPerson] ,[emergencyContactPhone],[birthdayTime],[resultjson],[url])VALUES" +
                                        "('" + userid + "','" + email + "','" + phone + "','" + nickname + "','" +
                                        trueName + "','" + identityCode + "','" + sex + "','" + emergencyContactPerson + "','" +
                                        emergencyContactPhone + "','" + birthdayTime + "','" + resultjson + "','" + Url + "')";
                                     sqlconection r2 = new sqlconection();
-                                     int d2 = r2.ExecuteUpdate(str4);
+                                    int d2 = r2.ExecuteUpdate(str4);
                                     Console.WriteLine(i);
                                     myStreamReader.Close();
                                 }
@@ -685,14 +642,206 @@ namespace ConsoleApp2
 
             }
         }
-        private static void SendRequestwms()
+
+        private static void SendRequestqqmemberssss()
+
+        {
+            try
+            {
+
+                int id = 0;
+                string sql3 = "select MAX(id) as id from qqnumber";
+                sqlconection r3 = new sqlconection();
+                DataTable d3 = new DataTable();
+                d3 = r3.ExecuteQuery(sql3);
+
+
+                string Url = "http://tmsearch.uspto.gov/bin/showfield?";
+                string State = "4810%3A6tw2w0.1.1";
+                // string name = "A B S BY ALLEN SCHWARTZc";
+                string name1 = "A Christmas Story";
+                string name = name1.Replace(" ", "+");
+                string url = "f=toc&state=" + State + "&p_search=searchss&p_L=50&BackReference=&p_plural=yes&p_s_PARA1=&p_tagrepl%7E%3A=PARA1%24LD&expr=PARA1+AND+PARA2&p_s_PARA2="+ name+"&p_tagrepl%7E%3A=PARA2%24COMB&p_op_ALL=AND&a_default=search&a_search=Submit+Query&a_search=Submit+Query";
+                string URL = Url + url;
+                try
+                {
+                    string cookieStr = "_ga=GA1.2.2050352112.1556612920; _4c_=lVPNbts8EHyVgGf%2FkJREkb65PygMFEWAtF%2FRk0BRq5iwLAokbdUJ8u5ZyrFa9FD080Hi7M7uiLvjZzLuoScbVhRCMMGVVEouyAEugWyeibdNep3JhmjTMgmc1ZJBIWmrCiEbQ1lWUC1Y25IF%2BZn6iDyTUvGCZvJlQczwVv9MjGsA%2BzC1EiuB7PiEKJcUj9AnhRAf8dxiBaF53Srd0IwL0IpqxCBaUZeiLCkYhbxP22r3AamcolTBGeOr6yW44qnnyXeY3cc4hM16PY7j6hSG6FaP7ryOXjdw1P4QlnoYOmt0tK5fDt4ZCGEdQHuzX86sZaOjrnUAbIuc5mRiFS9Dus0I9V1oDpi41xH6iFMjXxB9nRUw8AMDu%2Fvqsx6re4dql2rXt%2B6N%2BR%2F0jfO%2FR7ZnbbvqYwcmetdbU72zT9VDWsiU3vWxq7Ym2rONFmZBCNEeXX%2BpHgYAs58TtXdjAI%2Fo%2Fd67I9yVaToupb9blB4DQg8teD%2BxEAUb093meb2F0BS36PIaHdLaMjx0zugu1aCXptV8%2B8tu0BaTUwpRUi5UXuYFuiHiuqTIafohY0A4GYfNbMHLjBc8u7FZ%2Fos9OQwf2b%2F0vo7k%2F9W0dX37J6SB3T5JqYxLJcs%2FC15eXgE%3D; TMSearchsession=705753098.20480.0000; ROUTEID=.1";
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
+                   // request.Method = "GET";
+
+                    //request.ContentType = "text/html";
+                    request.Headers.Add("Cookie", cookieStr);
+                  //   request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";
+                    //request.Headers.Add("Accept", "text/html,application/xhtml+xml,application/xml; q = 0.9,image/webp,image/apng,*/*;q=0.8");
+                   // request.Headers.Add("Accept-Encoding", "gzip, deflate");
+                  //  request.Referer="http://tmsearch.uspto.gov/bin/gate.exe?f=searchss&state=4804:t0x26i.1.1";
+                  //  request.UserAgent = "Mozilla/5.0(Windows NT 10.0;WOW64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36";
+                  //  request.Headers.Add("Accept-Encoding", "gzip,deflate");
+                 //   string ur = string.Empty;
+                    try
+                    {
+                        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                        Stream myResponseStream = response.GetResponseStream();
+                        StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("iso8859-1"));
+                        string retString = myStreamReader.ReadToEnd().ToString();
+                        if (!string.IsNullOrEmpty(retString))
+                        {
+                            var ss = getObjectByJsonqqmodel(retString);
+                            string card = string.Empty;
+                            string qq;
+                            int role;
+                            int point;
+                            int level;
+                            string nick = string.Empty;
+                            foreach (var item in ss[0].mems)
+                            {
+                                id++;
+                                card = item.card;
+                                qq = item.uin;
+                                role = item.role;
+                                point = item.lv.point;
+                                level = item.lv.level;
+                                nick = item.nick;
+                                String str4 = "INSERT INTO qqnumber([id],[card],[qq],[role] ,[point] ,[level]," +
+                                   "[nick],[url],[groupqq])VALUES" +
+                                   "('" + id + "','" + card + "','" + qq + "','" + role + "','" +
+                                   point + "','" + level + "','" + nick + "','" + Url + "','" + 84479667 + "')";
+                                sqlconection r2 = new sqlconection();
+                                int d2 = r2.ExecuteUpdate(str4);
+                                Console.WriteLine(id);
+                            }
+                            myStreamReader.Close();
+                        }
+                    }
+
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        Console.WriteLine(Url);
+                      
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+
+
+            }
+
+
+            catch (Exception ex)
+            {
+
+            }
+}
+        private static void SendRequestqqmember()
+
+        {
+            try
+            {
+
+                int id = 0;
+                string sql3 = "select MAX(id) as id from qqnumber";
+                sqlconection r3 = new sqlconection();
+                DataTable d3 = new DataTable();
+                d3 = r3.ExecuteQuery(sql3);
+                if (d3.DataSet!=null)
+                {
+                    id = Convert.ToInt16(d3.Rows[0]["id"]);
+                }
+                else
+                {
+                    id = Convert.ToInt16(d3.Rows[0]["id"]);
+                }
+              //
+                for (int i =1; i < 1980; i++)
+                {
+                    Thread.Sleep(1000);
+                    if (i % 20 == 0)
+                    {
+                        int st1 = i-20;
+                        int end1 = i;
+                        string Url = "https://qun.qq.com/cgi-bin/qun_mgr/search_group_members?&gc=84479667&st=" + st1 + "&end=" + end1 + "&sort=0&bkn=484391013";
+                        try
+                        {
+                            string cookieStr = "pgv_pvi=5781527552; pgv_si=s2239714304; _qpsvr_localtk=0.24928224383509612; uin=o0540734160; skey=@tecCFSYfi; ptisp=ctc; RK=lII4qh6oW7; ptcz=4eb1cae21edb0d54148c5ca24e85fca60b4020940d1b3a4128d9db4191c33615; p_uin=o0540734160; traceid=c6205307b2; pt4_token=tkitUkdWqzd2qubEFb71Nr*p8Oi6EK2YaN6DUAAwQd0_; p_skey=Rza2CBXEaSrS4u0sB9Enc8pqQ1Z9v4*X-OjE8C-PTow_";
+                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
+                            request.Method = "POST";
+                            request.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
+                            request.Headers.Add("Cookie", cookieStr);
+                            string ur = string.Empty;
+                            try
+                            {
+                                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                                Stream myResponseStream = response.GetResponseStream();
+                                StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
+                                string retString = myStreamReader.ReadToEnd().ToString();
+                                if (!string.IsNullOrEmpty(retString))
+                                {
+                                    var ss = getObjectByJsonqqmodel(retString);
+                                    string card = string.Empty;
+                                    string qq;
+                                    int role;
+                                    int point;
+                                    int level;
+                                    string nick = string.Empty;
+                                    foreach (var item in ss[0].mems)
+                                    {
+                                        id++;
+                                        card = item.card;
+                                        qq = item.uin;
+                                        role = item.role;
+                                        point = item.lv.point;
+                                        level = item.lv.level;
+                                        nick = item.nick;
+                                        String str4 = "INSERT INTO qqnumber([id],[card],[qq],[role] ,[point] ,[level]," +
+                                           "[nick],[url],[groupqq])VALUES" +
+                                           "('" + id + "','" + card + "','" + qq + "','" + role + "','" +
+                                           point + "','" + level + "','" + nick + "','" + Url + "','"+ 84479667 + "')";
+                                        sqlconection r2 = new sqlconection();
+                                        int d2 = r2.ExecuteUpdate(str4);
+                                        Console.WriteLine(id);
+                                    }
+                                    myStreamReader.Close();
+                                }
+                            }
+
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                                Console.WriteLine(Url);
+                                Console.WriteLine(i);
+                            }
+                        }
+
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+            private static void SendRequestwms()
 
         {
             try
             {
                     
                   string ur = string.Empty;
-                for (int i = 1347; i < 1351; i++)
+                for (int i = 1384; i < 1393; i++)
                 {
                     string Url = "https://wapi.ai-cross.com/order/";
                     string URL = Url + i;
@@ -918,7 +1067,7 @@ namespace ConsoleApp2
                 d3 = r3.ExecuteQuery(sql3);
                 int id = Convert.ToInt16(d3.Rows[0]["id"]);
                 int qishuj=Convert.ToInt16(d3.Rows[0]["qishu"]);
-                for (int j= qishuj; j <qishuj+10; j++)
+                for (int j= qishuj; j <qishuj+4; j++)
                 {
                     if (j >= 8200 & j < 10000)
                     {
@@ -1009,10 +1158,16 @@ namespace ConsoleApp2
                             stm.Close();
 
 
+                            string sql6 = "SELECT dream FROM mengce where number=left('" + numbere + "',4)";
+                            sqlconection r6 = new sqlconection();
+                            DataTable d6 = new DataTable();
+                            d6 = r6.ExecuteQuery(sql6);
+                            string dream = d6.Rows[0]["dream"].ToString();
 
 
 
-                            String str4 = "INSERT INTO pailiewu([id],[qishu],[Datetime],[number] ,[details],[dream],[url])VALUES('" + id + "','" + qishu + "','" + datetime + "','" + numbere + "','" + datails + "','" + ' ' + "','" + URL + "')";
+
+                            String str4 = "INSERT INTO pailiewu([id],[qishu],[Datetime],[number] ,[details],[dream],[url])VALUES('" + id + "','" + qishu + "','" + datetime + "','" + numbere + "','" + datails + "','" + dream + "','" + URL + "')";
 
                             sqlconection r2 = new sqlconection();
                             int d2 = r2.ExecuteUpdate(str4);//执行后会有返回值，是int类型，如果执行失败会返回0；

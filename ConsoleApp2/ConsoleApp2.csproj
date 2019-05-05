@@ -54,8 +54,10 @@
     <Compile Include="Datas.cs" />
     <Compile Include="HTMLHelper.cs" />
     <Compile Include="HwUserInfo.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="qqmodel.cs" />
     <Compile Include="sqlconection.cs" />
   </ItemGroup>
   <ItemGroup>
