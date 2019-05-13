@@ -27,6 +27,7 @@ namespace ConsoleApp2
         private static int _endedConnenctionCount = 0;
         private static int _failedConnectionCount = 0;
 
+
         static void Main(string[] args)
         {
 
@@ -38,7 +39,7 @@ namespace ConsoleApp2
             //  SendRequestqqmemberssss();
             // string url11 = "https://www.bilibili.com/video/av49401880";
             // cc.SaveAsWebImg(url11);
-            //SendRequestplwduoxianc();
+            SendRequestplwduoxianc();
             //Thread thread25yi = new Thread(new ThreadStart(obj.SendRequestqxc));
             //thread25yi.Start();
             //void MethodTimer1()
@@ -49,14 +50,26 @@ namespace ConsoleApp2
             //        thread25yi.CurrentThread.Join(100);//阻止设定时间 
             //    }
             //}
-            //  SendRequestwms();
+            // SendRequestwms();
+            string str = "160万";
 
-        
-            // SendRequestlichul();
+           
+
+
+
+            Regex r = new Regex(".*(?=万)");
+            bool ismatch = r.IsMatch(str);
+           MatchCollection mc = r.Matches(str);
+            string result = string.Empty;
+            for (int i = 0; i < mc.Count; i++)
+            {
+                result += mc[i];//匹配结果是完整的数字，此处可以不做拼接的
+            }
+             SendRequestlichul();
             //SendRequestmengceproyIP();
-            // SendRequestqxc();
+            SendRequestqxc();
             // SendRequestproy();
-           // SendRequestplw();
+             //SendRequestplw();
             // SendRequestmengce();
             Console.Read();
             return;
@@ -314,7 +327,7 @@ namespace ConsoleApp2
             {
                 string ur = string.Empty;
                 // string sql3 = "select top 130 left(number,4) as number from qixingcai order by Datetime desc ";
-                string sql3 = "select top 130 left(number,4) as number from pailiewu order by Datetime desc ";
+                string sql3 = "select top 200 left(number,4) as number from pailiewu order by Datetime desc ";
                 sqlconection r3 = new sqlconection();
                 DataTable d3 = new DataTable();
                 d3 = r3.ExecuteQuery(sql3);
@@ -423,7 +436,7 @@ namespace ConsoleApp2
                         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                         Stream stm = new System.IO.Compression.GZipStream(response.GetResponseStream(), System.IO.Compression.CompressionMode.Decompress);
                         StreamReader myStreamReader = new StreamReader(stm, Encoding.GetEncoding("gb2312"));
-                        string retString = myStreamReader.ReadToEnd();
+                        string retString = myStreamReader.ReadToEnd();                    
                         if (!string.IsNullOrEmpty(retString))
                         {
                             string html = retString.Replace("null(", "").Replace(")", "");
@@ -460,7 +473,10 @@ namespace ConsoleApp2
                             string number = ReplaceHtmlTag(info[5]).Replace("\t", "").Replace("\n", "").Replace("\r", "").Replace("\r0", "").Replace("r2", "").Replace("r3", "").Replace("r8", "").Replace("r9", "").Trim();
                             string[] sArray = number.Split('：');
                             string numbere = sArray[1];
-
+                            if (Convert.ToDateTime(numberDatetime) >= Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                            {
+                                return;
+                            }
 
                             string sql6 = "SELECT dream FROM mengce where number=left(" + numbere + ",4)";
                             sqlconection r6 = new sqlconection();
@@ -474,6 +490,8 @@ namespace ConsoleApp2
 
                             sqlconection r2 = new sqlconection();
                             int d2 = r2.ExecuteUpdate(str4);//执行后会有返回值，是int类型，如果执行失败会返回0；
+                        
+
                             int d = 0;
                             d++;
                             int e = 0;
@@ -841,7 +859,7 @@ namespace ConsoleApp2
             {
                     
                   string ur = string.Empty;
-                for (int i = 1384; i < 1393; i++)
+                for (int i = 1392; i < 1431; i++)
                 {
                     string Url = "https://wapi.ai-cross.com/order/";
                     string URL = Url + i;
@@ -1156,7 +1174,10 @@ namespace ConsoleApp2
                             string numbere = sArray[1];
                             myStreamReader.Close();
                             stm.Close();
-
+                            if (datetime>= Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))
+                            {
+                                return;
+                            }
 
                             string sql6 = "SELECT dream FROM mengce where number=left('" + numbere + "',4)";
                             sqlconection r6 = new sqlconection();

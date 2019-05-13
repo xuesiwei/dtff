@@ -1,0 +1,17 @@
+E:\ConsoleApp2\WindowsFormsAppqxc\bin\Debug\WindowsFormsAppqxc.exe.config
+E:\ConsoleApp2\WindowsFormsAppqxc\bin\Debug\WindowsFormsAppqxc.exe
+E:\ConsoleApp2\WindowsFormsAppqxc\bin\Debug\WindowsFormsAppqxc.pdb
+E:\ConsoleApp2\WindowsFormsAppqxc\obj\Debug\WindowsFormsAppqxc.csprojAssemblyReference.cache
+E:\ConsoleApp2\WindowsFormsAppqxc\obj\Debug\WindowsFormsAppqxc.Properties.Resources.resources
+E:\ConsoleApp2\WindowsFormsAppqxc\obj\Debug\WindowsFormsAppqxc.csproj.GenerateResource.cache
+E:\ConsoleApp2\WindowsFormsAppqxc\obj\Debug\WindowsFormsAppqxc.csproj.CoreCompileInputs.cache
+E:\ConsoleApp2\WindowsFormsAppqxc\obj\Debug\WindowsFormsAppqxc.exe
+E:\ConsoleApp2\WindowsFormsAppqxc\obj\Debug\WindowsFormsAppqxc.pdb
+E:\ConsoleApp2\WindowsFormsAppqxc\obj\Debug\WindowsFormsAppqxc.Form1.resources
+E:\ConsoleApp2\WindowsFormsAppqxc\bin\Debug\ConsoleApp2.exe
+E:\ConsoleApp2\WindowsFormsAppqxc\bin\Debug\HtmlAgilityPack.dll
+E:\ConsoleApp2\WindowsFormsAppqxc\bin\Debug\Newtonsoft.Json.dll
+E:\ConsoleApp2\WindowsFormsAppqxc\bin\Debug\ConsoleApp2.pdb
+E:\ConsoleApp2\WindowsFormsAppqxc\bin\Debug\ConsoleApp2.exe.config
+E:\ConsoleApp2\WindowsFormsAppqxc\bin\Debug\HtmlAgilityPack.pdb
+E:\ConsoleApp2\WindowsFormsAppqxc\obj\Debug\WindowsFormsAppqxc.csproj.CopyComplete

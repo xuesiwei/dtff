@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp2
 {
-    class sqlconection
+  public  class sqlconection
     {
         private string MySqlCon = "Data Source=PV-11;Initial Catalog=DTcmsdb5;User ID=sa;Password=123456";             //在下面我会介绍这部分怎么填写;
 
