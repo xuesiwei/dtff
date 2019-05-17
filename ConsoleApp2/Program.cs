@@ -39,7 +39,9 @@ namespace ConsoleApp2
             //  SendRequestqqmemberssss();
             // string url11 = "https://www.bilibili.com/video/av49401880";
             // cc.SaveAsWebImg(url11);
-            SendRequestplwduoxianc();
+            //SendRequestplwduoxianc();
+            //SendRequestBLZinfo();
+            SendRequestBLZzhYanzheng();
             //Thread thread25yi = new Thread(new ThreadStart(obj.SendRequestqxc));
             //thread25yi.Start();
             //void MethodTimer1()
@@ -53,23 +55,23 @@ namespace ConsoleApp2
             // SendRequestwms();
             string str = "160万";
 
-           
 
 
 
-            Regex r = new Regex(".*(?=万)");
-            bool ismatch = r.IsMatch(str);
-           MatchCollection mc = r.Matches(str);
-            string result = string.Empty;
-            for (int i = 0; i < mc.Count; i++)
-            {
-                result += mc[i];//匹配结果是完整的数字，此处可以不做拼接的
-            }
-             SendRequestlichul();
+
+            //Regex r = new Regex(".*(?=万)");
+            //bool ismatch = r.IsMatch(str);
+            //MatchCollection mc = r.Matches(str);
+            //string result = string.Empty;
+            //for (int i = 0; i < mc.Count; i++)
+            //{
+            //    result += mc[i];//匹配结果是完整的数字，此处可以不做拼接的
+            //}
+          // SendRequestlichul();
             //SendRequestmengceproyIP();
-            SendRequestqxc();
+           // SendRequestqxc();
             // SendRequestproy();
-             //SendRequestplw();
+            //SendRequestplw();
             // SendRequestmengce();
             Console.Read();
             return;
@@ -436,7 +438,7 @@ namespace ConsoleApp2
                         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                         Stream stm = new System.IO.Compression.GZipStream(response.GetResponseStream(), System.IO.Compression.CompressionMode.Decompress);
                         StreamReader myStreamReader = new StreamReader(stm, Encoding.GetEncoding("gb2312"));
-                        string retString = myStreamReader.ReadToEnd();                    
+                        string retString = myStreamReader.ReadToEnd();
                         if (!string.IsNullOrEmpty(retString))
                         {
                             string html = retString.Replace("null(", "").Replace(")", "");
@@ -490,7 +492,7 @@ namespace ConsoleApp2
 
                             sqlconection r2 = new sqlconection();
                             int d2 = r2.ExecuteUpdate(str4);//执行后会有返回值，是int类型，如果执行失败会返回0；
-                        
+
 
                             int d = 0;
                             d++;
@@ -581,6 +583,239 @@ namespace ConsoleApp2
             // string tradeMsg = content.su(content.IndexOf("`"));
 
         }
+        public static string CreatePostData(Dictionary<string, string> PostParameters)
+        {
+            var query = from s in PostParameters select s.Key + "=" + s.Value;
+            string[] parameters = query.ToArray<string>();
+            return string.Join("&", parameters);
+        }
+
+        private static void SendRequestBLZzhYanzheng()
+
+        {
+            try
+            {
+                sqlconection r2 = new sqlconection();
+                string ur = string.Empty;
+                List<string> mList = new List<string>();
+                string sql6 = "select userid  from BLZitStudentInfo";
+                DataTable d6 = new DataTable();
+                d6 = r2.ExecuteQuery(sql6);
+                var rowssm = d6.Rows.Cast<DataRow>().Select(e => e.Field<int>("userid"));
+                foreach (var item in rowssm)
+                {
+                    string ex = item.ToString();
+
+                    mList.Add(ex);
+
+                }
+                for (int i = 74373; i < 80000; i++)
+                {
+                    if (!mList.Contains(i.ToString()))
+                    {
+                        Dictionary<string, string> parameters = new Dictionary<string, string>();
+                        parameters.Add("IPT_LOGINUSERNAME", "101002133035");
+                        parameters.Add("IPT_LOGINPASSWORD", "000000");
+                     
+                        string postdata = CreatePostData(parameters);
+                     
+                        
+                        string Url = "http://eol.zhbit.com/homepage/common/login.jsp?"+ postdata;
+                       
+                        int id = 1;
+                      
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
+                     
+                       
+                        request.Method = "GET";
+                     
+
+                        try
+                        {
+                            //request.AllowAutoRedirect = false;
+                            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                          
+                           
+                            Stream myResponseStream1 = response.GetResponseStream();
+                            StreamReader myStreamReader1 = new StreamReader(myResponseStream1, Encoding.GetEncoding("gbk"));
+                            string retString1 = myStreamReader1.ReadToEnd().ToString();
+                            string cookie = response.Headers.Get("Set-Cookie");
+                            //string cookie = "JSESSIONID=8F32DAADE4BB5CD825ABF514181CD069";
+                            string[]cookies = cookie.Split(';');
+                            string Cookie = cookies[0];
+                            string Url2= "http://eol.zhbit.com/popups/viewstudent_info.jsp?SID="+29805+"";
+                            HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(Url2);
+                           
+                            request2.Method = "GET";
+                            request2.ContentType = "text/html;charset=gbk";
+                            request2.Headers.Add("Cookie", Cookie);
+
+                            HttpWebResponse response2 = (HttpWebResponse)request2.GetResponse();
+                            string cookie2 = response2.Headers.Get("Set-Cookie");
+                            Stream myResponseStream = response2.GetResponseStream();
+                            StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("gbk"));
+                            string retString = myStreamReader.ReadToEnd().ToString();
+                            if (!string.IsNullOrEmpty(retString))
+                            {
+                                string html = retString.Replace("null(", "").Replace(")", "");
+                                List<string> info = GetHtmls("<th align=", "</td>", html);
+                                if (info.Count != 0)
+                                {
+                                    string xuehao = ReplaceHtmlTag(info[0]).Replace("\"right\" width=\"20%\">", "").Replace("\n", "").Replace(" ", "").Trim();
+                                    string[] xueHao = xuehao.Split('：');
+                                    string xuehaor = xueHao[1].ToString();
+                                    string username = ReplaceHtmlTag(info[1]).Replace("\"right\" width=\"20%\">", "").Replace("\n", "").Replace(" ", "").Trim();
+                                    string[] userName = username.Split('：');
+                                    string usernamer = userName[1].ToString();
+
+
+                                    String str4 = "INSERT INTO BLZitStudentInfo([id],[xuehao],[userName],[userid] ,[url])VALUES" +
+                                       "('" + id + "','" + xuehaor + "','" + usernamer + "','" + i + "','" + Url + "')";
+
+                                    int d2 = r2.ExecuteUpdate(str4);
+                                    Console.WriteLine(i);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("未有该用户{0}", i);
+                                    continue;
+
+                                }
+
+                            }
+                            myStreamReader.Close();
+                        }
+
+                        catch (Exception ex)
+                        {
+                            try
+                            {
+                                int iid = 1;
+                                Console.WriteLine(ex.Message);
+                                String str6 = "INSERT INTO BLZitStudentnotUserId([id],[userid],[url])VALUES" +
+                                     "('" + iid + "','" + i + "','" + Url + "')";
+
+                                int d2 = r2.ExecuteUpdate(str6);
+                                iid++;
+                            }
+                            catch (Exception ex1)
+                            {
+                                Console.WriteLine(ex1.Message);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("已存在改{0}useerid", i);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        private static void SendRequestBLZinfo()
+
+        {
+            try
+            {
+                sqlconection r2 = new sqlconection();
+                string ur = string.Empty;
+                List<string> mList = new List<string>();
+                string sql6 = "select userid  from BLZitStudentInfo";        
+                DataTable d6 = new DataTable();            
+                d6 = r2.ExecuteQuery(sql6);
+                var rowssm = d6.Rows.Cast<DataRow>().Select(e => e.Field<int>("userid"));
+                foreach (var item in rowssm)
+                {
+                    string ex = item.ToString();
+
+                    mList.Add(ex);
+
+                }
+                for (int i = 74373; i<80000; i++)
+                {
+                    if (!mList.Contains(i.ToString()))
+                    {
+                        string Url = "http://eol.zhbit.com/popups/viewstudent_info.jsp?SID=" + i + "";
+                        int id = 1;
+                        string cookieStr = "JSESSIONID=FA57FAD0E11A64FC11FA40290B20A9F4";
+                        Thread.Sleep(5000);
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
+                        request.Timeout = 5000;
+                        request.Method = "GET";
+                        request.ContentType = "atext/html;charset=gbk";
+                        request.Headers.Add("Cookie", cookieStr);
+                        try
+                        {
+                       
+                            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                           
+                            Stream myResponseStream = response.GetResponseStream();
+                            StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("gbk"));
+                            string retString = myStreamReader.ReadToEnd().ToString();
+                            if (!string.IsNullOrEmpty(retString))
+                            {
+                                string html = retString.Replace("null(", "").Replace(")", "");
+                                List<string> info = GetHtmls("<th align=", "</td>", html);
+                                if (info.Count != 0)
+                                {
+                                    string xuehao = ReplaceHtmlTag(info[0]).Replace("\"right\" width=\"20%\">", "").Replace("\n", "").Replace(" ", "").Trim();
+                                    string[] xueHao = xuehao.Split('：');
+                                    string xuehaor = xueHao[1].ToString();
+                                    string username = ReplaceHtmlTag(info[1]).Replace("\"right\" width=\"20%\">", "").Replace("\n", "").Replace(" ", "").Trim();
+                                    string[] userName = username.Split('：');
+                                    string usernamer = userName[1].ToString();
+
+
+                                    String str4 = "INSERT INTO BLZitStudentInfo([id],[xuehao],[userName],[userid] ,[url])VALUES" +
+                                       "('" + id + "','" + xuehaor + "','" + usernamer + "','" + i + "','" + Url + "')";
+
+                                    int d2 = r2.ExecuteUpdate(str4);
+                                    Console.WriteLine(i);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("未有该用户{0}",i);
+                                    continue;
+                                 
+                                }
+                               
+                            }
+                            myStreamReader.Close();
+                        }
+                        
+                        catch (Exception ex)
+                        {
+                            try
+                            {
+                                int iid = 1;
+                                Console.WriteLine(ex.Message);
+                                String str6 = "INSERT INTO BLZitStudentnotUserId([id],[userid],[url])VALUES" +
+                                     "('" + iid + "','" + i + "','" + Url + "')";
+
+                                int d2 = r2.ExecuteUpdate(str6);
+                                iid++;
+                            }
+                            catch(Exception ex1) {
+                                Console.WriteLine(ex1.Message);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("已存在改{0}useerid", i);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }              
         private static void SendRequestHwUserinfo()
 
         {

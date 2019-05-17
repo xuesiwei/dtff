@@ -15,7 +15,7 @@ namespace WindowsFormsAppqxc
     public partial class Form1 : Form
     {
         public Form1()
-        {          
+        {
             InitializeComponent();
             textBoxyuan.Text = "1:8900";
             textBoxMember.Text = "wz1688";
@@ -67,7 +67,7 @@ namespace WindowsFormsAppqxc
             string strArraynumber = string.Join("\n", mListqbsg);
             richTextBox1.Text = strArraynumber;
         }
-                
+
         private void button1_Click_1(object sender, EventArgs e)
         {
             try
@@ -111,9 +111,38 @@ namespace WindowsFormsAppqxc
 
         }
 
+
         private void buttonbaoma_Click(object sender, EventArgs e)
         {
-
+            string number = richTextBox2.Text;
+            string[] strnumber = number.Split('\n');
+            char[] str1 = strnumber[0].ToCharArray();
+            var listr = str1.Select(d => d.ToString()).ToList();     
+            string[] strnumber2;         
+            strnumber2 = listr.ToArray();
+            List<string> list = Route(str1.Length, ref strnumber2);
+        }
+        public static List<string> Route(int count, ref string[] str)
+        {
+            if (count > 1)
+            {
+                List<string> list = Route(count - 1, ref str);
+                List<string> newList = new List<string>();
+                for (int i = 0; i < count; i++)
+                {
+                    for (int j = 0; j < list.Count; j++)
+                    {
+                        newList.Add(list[j].Insert(i, str[count - 1]));
+                    }
+                }
+                return newList;
+            }
+            else
+            {
+                return new List<string>() { str[0] };
+            }
         }
     }
 }
+
+
