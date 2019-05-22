@@ -53,6 +53,7 @@
             this.buttonyulan = new System.Windows.Forms.Button();
             this.buttonbaoma = new System.Windows.Forms.Button();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+            this.richTextBox3 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // textBoxhousand
@@ -249,7 +250,7 @@
             // 
             // buttonbaoma
             // 
-            this.buttonbaoma.Location = new System.Drawing.Point(532, 351);
+            this.buttonbaoma.Location = new System.Drawing.Point(356, 389);
             this.buttonbaoma.Name = "buttonbaoma";
             this.buttonbaoma.Size = new System.Drawing.Size(62, 23);
             this.buttonbaoma.TabIndex = 24;
@@ -259,17 +260,26 @@
             // 
             // richTextBox2
             // 
-            this.richTextBox2.Location = new System.Drawing.Point(415, 141);
+            this.richTextBox2.Location = new System.Drawing.Point(354, 141);
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.Size = new System.Drawing.Size(100, 233);
             this.richTextBox2.TabIndex = 25;
             this.richTextBox2.Text = "";
+            // 
+            // richTextBox3
+            // 
+            this.richTextBox3.Location = new System.Drawing.Point(471, 97);
+            this.richTextBox3.Name = "richTextBox3";
+            this.richTextBox3.Size = new System.Drawing.Size(100, 345);
+            this.richTextBox3.TabIndex = 26;
+            this.richTextBox3.Text = "";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 486);
+            this.Controls.Add(this.richTextBox3);
             this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.buttonbaoma);
             this.Controls.Add(this.buttonyulan);
@@ -329,6 +339,7 @@
         private System.Windows.Forms.Button buttonyulan;
         private System.Windows.Forms.Button buttonbaoma;
         private System.Windows.Forms.RichTextBox richTextBox2;
+        private System.Windows.Forms.RichTextBox richTextBox3;
     }
 }
 

@@ -21,4 +21,3 @@ E:\ConsoleApp2\ConsoleApp2\obj\Debug\ConsoleApp2.csproj.CoreCompileInputs.cache
 E:\ConsoleApp2\ConsoleApp2\obj\Debug\ConsoleApp2.csproj.CopyComplete
 E:\ConsoleApp2\ConsoleApp2\obj\Debug\ConsoleApp2.exe
 E:\ConsoleApp2\ConsoleApp2\obj\Debug\ConsoleApp2.pdb
-E:\ConsoleApp2\ConsoleApp2\obj\Debug\ConsoleApp2.csprojAssemblyReference.cache

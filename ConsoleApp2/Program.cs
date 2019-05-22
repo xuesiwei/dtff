@@ -30,18 +30,18 @@ namespace ConsoleApp2
 
         static void Main(string[] args)
         {
-
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             Program cc = new Program();
             int a = 0;
             string path = "E:\\微信对账单.txt";
             //cc.ReadTxtContent(path);
             //  SendRequestHwUserinfo();
-            //  SendRequestqqmemberssss();
+             //SendRequestqqmember();
             // string url11 = "https://www.bilibili.com/video/av49401880";
             // cc.SaveAsWebImg(url11);
             //SendRequestplwduoxianc();
-            //SendRequestBLZinfo();
-            SendRequestBLZzhYanzheng();
+            SendRequestBLZinfo();
+            //SendRequestBLZzhYanzheng();
             //Thread thread25yi = new Thread(new ThreadStart(obj.SendRequestqxc));
             //thread25yi.Start();
             //void MethodTimer1()
@@ -53,6 +53,7 @@ namespace ConsoleApp2
             //    }
             //}
             // SendRequestwms();
+          //  SendRequestwine();
             string str = "160万";
 
 
@@ -69,7 +70,7 @@ namespace ConsoleApp2
             //}
           // SendRequestlichul();
             //SendRequestmengceproyIP();
-           // SendRequestqxc();
+            SendRequestqxc();
             // SendRequestproy();
             //SendRequestplw();
             // SendRequestmengce();
@@ -102,6 +103,12 @@ namespace ConsoleApp2
             // }
 
             //  }
+        }
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Console.WriteLine(e.ExceptionObject.ToString());
+            Console.ReadKey();
+       
         }
         //冒泡排序方法，从小到大排，虽然很多冒泡排序都是从大到小，
         //可是我就想这么排，你能怎么着我。
@@ -403,7 +410,7 @@ namespace ConsoleApp2
                 d3 = r3.ExecuteQuery(sql3);
                 int id = Convert.ToInt16(d3.Rows[0]["id"]);
                 int qishuj = Convert.ToInt16(d3.Rows[0]["qishu"]);
-                for (int j = qishuj; j < qishuj + 3; j++)
+                for (int j = qishuj; j < qishuj + 5; j++)
                 {
                     if (j >= 8000 & j < 10000)
                     {
@@ -714,6 +721,7 @@ namespace ConsoleApp2
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Console.Read();
             }
         }
         private static void SendRequestBLZinfo()
@@ -735,13 +743,13 @@ namespace ConsoleApp2
                     mList.Add(ex);
 
                 }
-                for (int i = 74373; i<80000; i++)
+                for (int i = 87701; i<900000; i++)
                 {
                     if (!mList.Contains(i.ToString()))
                     {
                         string Url = "http://eol.zhbit.com/popups/viewstudent_info.jsp?SID=" + i + "";
                         int id = 1;
-                        string cookieStr = "JSESSIONID=FA57FAD0E11A64FC11FA40290B20A9F4";
+                        string cookieStr = "JSESSIONID=D7E34D4928E312AB7A350B16B9252E08";
                         Thread.Sleep(5000);
                         HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
                         request.Timeout = 5000;
@@ -750,7 +758,7 @@ namespace ConsoleApp2
                         request.Headers.Add("Cookie", cookieStr);
                         try
                         {
-                       
+
                             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                            
                             Stream myResponseStream = response.GetResponseStream();
@@ -786,7 +794,7 @@ namespace ConsoleApp2
                             }
                             myStreamReader.Close();
                         }
-                        
+
                         catch (Exception ex)
                         {
                             try
@@ -799,7 +807,8 @@ namespace ConsoleApp2
                                 int d2 = r2.ExecuteUpdate(str6);
                                 iid++;
                             }
-                            catch(Exception ex1) {
+                            catch (Exception ex1)
+                            {
                                 Console.WriteLine(ex1.Message);
                             }
                         }
@@ -1010,17 +1019,18 @@ namespace ConsoleApp2
                     id = Convert.ToInt16(d3.Rows[0]["id"]);
                 }
               //
-                for (int i =1; i < 1980; i++)
+                for (int i =1; i < 1000; i++)
                 {
                     Thread.Sleep(1000);
                     if (i % 20 == 0)
                     {
                         int st1 = i-20;
                         int end1 = i;
-                        string Url = "https://qun.qq.com/cgi-bin/qun_mgr/search_group_members?&gc=84479667&st=" + st1 + "&end=" + end1 + "&sort=0&bkn=484391013";
+                        string qqgropunumber="54030157";
+                        string Url = "https://qun.qq.com/cgi-bin/qun_mgr/search_group_members?&gc="+ qqgropunumber + "&st=" + st1 + "&end=" + end1 + "&sort=0&bkn=1237445291";
                         try
                         {
-                            string cookieStr = "pgv_pvi=5781527552; pgv_si=s2239714304; _qpsvr_localtk=0.24928224383509612; uin=o0540734160; skey=@tecCFSYfi; ptisp=ctc; RK=lII4qh6oW7; ptcz=4eb1cae21edb0d54148c5ca24e85fca60b4020940d1b3a4128d9db4191c33615; p_uin=o0540734160; traceid=c6205307b2; pt4_token=tkitUkdWqzd2qubEFb71Nr*p8Oi6EK2YaN6DUAAwQd0_; p_skey=Rza2CBXEaSrS4u0sB9Enc8pqQ1Z9v4*X-OjE8C-PTow_";
+                            string cookieStr = "pgv_pvi=586314752; RK=mJI4uh6JSZ; ptcz=53d7c290c34862af168da5a2dd3ab3371994226e562008b71a7337592c06bf6c; pgv_pvid=8303468981; pac_uid=0_b1cc3f422dc85; tvfe_boss_uuid=50a22e41292cd555; traceid=fcfa927c09; _qpsvr_localtk=0.055369715164580224; pgv_si=s4111436800; uin=o0540734160; skey=@najBJeUBe; ptisp=ctc; p_uin=o0540734160; pt4_token=3R6u1oHawbpnk5xGJ4VyTFxjoWlGSQNJJQC8bJCWuuo_; p_skey=3eq4DWmvvkO-7zQkqKB9ypWpmDrGtVGbVmK-1p9glsg_";
                             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
                             request.Method = "POST";
                             request.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
@@ -1053,7 +1063,7 @@ namespace ConsoleApp2
                                         String str4 = "INSERT INTO qqnumber([id],[card],[qq],[role] ,[point] ,[level]," +
                                            "[nick],[url],[groupqq])VALUES" +
                                            "('" + id + "','" + card + "','" + qq + "','" + role + "','" +
-                                           point + "','" + level + "','" + nick + "','" + Url + "','"+ 84479667 + "')";
+                                           point + "','" + level + "','" + nick + "','" + Url + "','"+ qqgropunumber + "')";
                                         sqlconection r2 = new sqlconection();
                                         int d2 = r2.ExecuteUpdate(str4);
                                         Console.WriteLine(id);
@@ -1086,15 +1096,85 @@ namespace ConsoleApp2
 
             }
         }
+        private static void SendRequestwine()
 
-            private static void SendRequestwms()
+        {
+            try
+            {
+
+                string ur = string.Empty;
+                for (int i = 1430; i < 1543; i++)
+                {
+                    string Url = "https://twapi.ai-cross.com/order/";
+                    string URL = Url + i;
+                    try
+                    {
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
+                        string access_token = "fU3SnSEbbWjrMK6BjTTlhAWCEHoQBakHgopi1C7RMqE8EnEM9L/LkC2DiC67yu7q3sZf3wLm+q+Cg1icKn6LD3x+MOwvGTlLQnxZ2YkbVtBU0piVel5EJI7Q0WgLDsUf";                  
+                        string origin = "https://wine.ai-cross.com";
+                        string nbenterpriseguid = "49fd9414-666c-11e9-95e2-00163e0a2622";
+                        request.Method = "GET";
+                        request.ContentType = "application/json;charset=utf-8";
+                        request.Headers.Add("access_token", access_token);
+                        request.Referer = "https://wine.ai-cross.com/home/index.html";             
+                        request.Headers.Add("origin", origin);
+                        request.Headers.Add("nb-enterprise-guid", nbenterpriseguid);
+                        try
+                        {
+                            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                            Stream myResponseStream = response.GetResponseStream();
+                            StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
+                            string retString = myStreamReader.ReadToEnd().ToString();
+                            if (!string.IsNullOrEmpty(retString))
+                            {
+
+                                var ss = getObjectByJson(retString);
+                                int id = ss[0].datas.id;
+                                string order_buyer_regno = ss[0].datas.order_buyer_regno;
+                                string order_buyer_name = ss[0].datas.order_buyer_name;
+                                string order_buyer_idcard = ss[0].datas.order_buyer_idcard;
+                                string order_consignee = ss[0].datas.order_consignee;
+                                string order_consignee_tel = ss[0].datas.order_consignee_tel;
+                                string order_consignee_addr = ss[0].datas.order_consignee_addr;
+                                string order_actural_paid = ss[0].datas.order_actural_paid;
+                                string order_currency = ss[0].datas.order_currency;
+                                string order_express_no = ss[0].datas.order_express_no;
+                                string order_express = ss[0].datas.order_express;
+                                DateTime? create_time = Convert.ToDateTime(ss[0].datas.create_time);
+                                String str4 = "INSERT INTO orderInfo([id],[order_buyer_regno],[order_buyer_name],[order_buyer_idcard] ,[order_consignee] ,[order_consignee_tel]," +
+                                   "[order_consignee_addr],[order_actural_paid] ,[order_currency],[order_express_no],[order_express],[details],[url],[create_time])VALUES" +
+                                   "('" + id + "','" + order_buyer_regno + "','" + order_buyer_name + "','" + order_buyer_idcard + "','" +
+                                   order_consignee + "','" + order_consignee_tel + "','" + order_consignee_addr + "','" + order_actural_paid + "','" +
+                                   order_currency + "','" + order_express_no + "','" + order_express + "','" + retString + "','" + URL + "','" + create_time + "')";
+                                sqlconection r2 = new sqlconection();
+                                int d2 = r2.ExecuteUpdate(str4);
+                                Console.WriteLine(i);
+                                myStreamReader.Close();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+
+                    }
+                    catch (Exception ex) { }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        private static void SendRequestwms()
 
         {
             try
             {
                     
                   string ur = string.Empty;
-                for (int i = 1392; i < 1431; i++)
+                for (int i = 1430; i < 1543; i++)
                 {
                     string Url = "https://wapi.ai-cross.com/order/";
                     string URL = Url + i;
@@ -1320,7 +1400,7 @@ namespace ConsoleApp2
                 d3 = r3.ExecuteQuery(sql3);
                 int id = Convert.ToInt16(d3.Rows[0]["id"]);
                 int qishuj=Convert.ToInt16(d3.Rows[0]["qishu"]);
-                for (int j= qishuj; j <qishuj+4; j++)
+                for (int j= qishuj; j <qishuj+10; j++)
                 {
                     if (j >= 8200 & j < 10000)
                     {

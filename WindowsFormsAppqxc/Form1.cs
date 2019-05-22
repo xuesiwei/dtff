@@ -33,6 +33,7 @@ namespace WindowsFormsAppqxc
             List<string> mListqb = new List<string>();
             List<string> mListqbs = new List<string>();
             List<string> mListqbsg = new List<string>();
+            List<string> mexList = new List<string>();
             foreach (var itqian in textBoxhousand.Text)
             {
 
@@ -62,6 +63,10 @@ namespace WindowsFormsAppqxc
                     string qbsg = itgege + itge;
                     mListqbsg.Add(qbsg);
                 }
+
+            }
+            foreach(var item in mListqbsg)
+            {
 
             }
             string strArraynumber = string.Join("\n", mListqbsg);
@@ -121,6 +126,20 @@ namespace WindowsFormsAppqxc
             string[] strnumber2;         
             strnumber2 = listr.ToArray();
             List<string> list = Route(str1.Length, ref strnumber2);
+            List<string> exist = new List<string>();
+            foreach(var item in list)
+            {    if (!exist.Contains(item))
+                {
+                    exist.Add(item);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            string strArraynumber = string.Join("\n", exist);
+
+            richTextBox3.Text= strArraynumber;
         }
         public static List<string> Route(int count, ref string[] str)
         {
