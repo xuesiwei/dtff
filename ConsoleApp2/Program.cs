@@ -35,12 +35,13 @@ namespace ConsoleApp2
             int a = 0;
             string path = "E:\\微信对账单.txt";
             //cc.ReadTxtContent(path);
-            //  SendRequestHwUserinfo();
-             //SendRequestqqmember();
+            // SendRequestHwUserinfo();
+            //SendRequestqqmember();
             // string url11 = "https://www.bilibili.com/video/av49401880";
             // cc.SaveAsWebImg(url11);
             //SendRequestplwduoxianc();
-            SendRequestBLZinfo();
+              //SendRequestBLZinfo();
+        
             //SendRequestBLZzhYanzheng();
             //Thread thread25yi = new Thread(new ThreadStart(obj.SendRequestqxc));
             //thread25yi.Start();
@@ -53,13 +54,8 @@ namespace ConsoleApp2
             //    }
             //}
             // SendRequestwms();
-          //  SendRequestwine();
+          SendRequestwine();
             string str = "160万";
-
-
-
-
-
             //Regex r = new Regex(".*(?=万)");
             //bool ismatch = r.IsMatch(str);
             //MatchCollection mc = r.Matches(str);
@@ -70,9 +66,9 @@ namespace ConsoleApp2
             //}
           // SendRequestlichul();
             //SendRequestmengceproyIP();
-            SendRequestqxc();
+          // SendRequestqxc();
             // SendRequestproy();
-            //SendRequestplw();
+         // SendRequestplw();
             // SendRequestmengce();
             Console.Read();
             return;
@@ -107,8 +103,7 @@ namespace ConsoleApp2
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Console.WriteLine(e.ExceptionObject.ToString());
-            Console.ReadKey();
-       
+            Console.ReadKey();    
         }
         //冒泡排序方法，从小到大排，虽然很多冒泡排序都是从大到小，
         //可是我就想这么排，你能怎么着我。
@@ -147,8 +142,6 @@ namespace ConsoleApp2
                 ThreadPool.QueueUserWorkItem(u => SendRequestqxc());
             }
         }
-
-
         private static void Reset()
         {
             _failedConnectionCount = 0;
@@ -164,18 +157,14 @@ namespace ConsoleApp2
                 htmlDoc.Load("http://kaijiang.500.com/shtml/qxc/04102.shtml", encoder);
                 HtmlWeb webClient = new HtmlWeb();
                 HtmlAgilityPack.HtmlDocument doc = webClient.Load("http://kaijiang.500.com/shtml/qxc/04102.shtml");
-
                 HtmlNodeCollection hrefList = doc.DocumentNode.SelectNodes(".//a[@href]");
-
                 if (hrefList != null)
                 {
                     foreach (HtmlNode href in hrefList)
                     {
                         HtmlAttribute att = href.Attributes["href"];
                         Console.WriteLine(att.Value);
-
                     }
-
                 }
             }
             catch (Exception ex)
@@ -206,11 +195,9 @@ namespace ConsoleApp2
         {
             string strText = System.Text.RegularExpressions.Regex.Replace(html, "<[^>]+>", "");
             strText = System.Text.RegularExpressions.Regex.Replace(strText, "&[^;]+;", "");
-
             if (length > 0 && strText.Length > length)
                 return strText.Substring(0, length);
-
-            return strText;
+                return strText;
         }
         private static void SendRequest3()
         {
@@ -221,43 +208,27 @@ namespace ConsoleApp2
                 Result = Random.Next(0, 9999);
                 Console.WriteLine(Result);
             }
-
         }
         private static void SendRequestproy()
-
         {
             try
             {
                 string ur = string.Empty;
-
                 string Url = "http://kaijiang.500.com/shtml/plw/04010.shtml";
-
                 //string Url = "http://192.168.0.242/admin/";
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
-
-
-
                 request.Method = "GET";
                 request.ContentType = "application/json;charset=utf-8";
-
-
                 //设置代理
                 WebProxy proxy = new WebProxy();
                 proxy.Address = new Uri("http://180.113.105.79:4332");
                 request.UseDefaultCredentials = true;
                 request.Proxy = proxy;
-
-
-
                 try
                 {
                     HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
                     Stream myResponseStream = response.GetResponseStream();
-
-
                     StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.UTF8);
-
                     string retString = myStreamReader.ReadToEnd();
                     myStreamReader.Close();
                     myResponseStream.Close();
@@ -276,17 +247,13 @@ namespace ConsoleApp2
             //return content;
         }
         private static void SendRequestmengceproyIP()
-
         {
             try
             {
                 string ur = string.Empty;
                 int id = 1;
-
-
                 id++;
                 string Url = "https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list?tdsourcetag=s_pcqq_aiomsg";
-
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
                 request.Method = "GET";
                 request.ContentType = "application/json;charset=gb2312";
@@ -296,7 +263,6 @@ namespace ConsoleApp2
                 try
                 {
                     HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
                     Stream myResponseStream = response.GetResponseStream();
                     StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("gb2312"));
                     string retString = myStreamReader.ReadToEnd();
@@ -340,7 +306,6 @@ namespace ConsoleApp2
                 sqlconection r3 = new sqlconection();
                 DataTable d3 = new DataTable();
                 d3 = r3.ExecuteQuery(sql3);
-
                 // var rowssm = d3.Rows.Cast<DataRow>().Select(x => new { a = x.Field<string>("number"),b = x.Field<string>("url")});
                 var rowssm = d3.Rows.Cast<DataRow>().Select(x => new { a = x.Field<string>("number") });
                 List<int> mList = new List<int>();
@@ -692,7 +657,7 @@ namespace ConsoleApp2
                             }
                             myStreamReader.Close();
                         }
-
+                         
                         catch (Exception ex)
                         {
                             try
@@ -743,13 +708,13 @@ namespace ConsoleApp2
                     mList.Add(ex);
 
                 }
-                for (int i = 87701; i<900000; i++)
+                for (int i = 57318; i<100000; i++)
                 {
                     if (!mList.Contains(i.ToString()))
                     {
                         string Url = "http://eol.zhbit.com/popups/viewstudent_info.jsp?SID=" + i + "";
                         int id = 1;
-                        string cookieStr = "JSESSIONID=D7E34D4928E312AB7A350B16B9252E08";
+                        string cookieStr = "JSESSIONID=1A86FB3616CC3F5C16EC4F78B30F766C";
                         Thread.Sleep(5000);
                         HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
                         request.Timeout = 5000;
@@ -1096,6 +1061,7 @@ namespace ConsoleApp2
 
             }
         }
+      
         private static void SendRequestwine()
 
         {
@@ -1103,16 +1069,22 @@ namespace ConsoleApp2
             {
 
                 string ur = string.Empty;
-                for (int i = 1430; i < 1543; i++)
+                string sql3 = "select max(id) as id from dbo.orderInfo";
+                sqlconection r3 = new sqlconection();
+                DataTable d3 = new DataTable();
+                d3 = r3.ExecuteQuery(sql3);
+                int id = Convert.ToInt16(d3.Rows[0]["id"]);
+                for (int i = id+1; i < id+10; i++)
                 {
-                    string Url = "https://twapi.ai-cross.com/order/";
+                    string Url = "https://wapi.ai-cross.com/order/";
                     string URL = Url + i;
                     try
                     {
-                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
-                        string access_token = "fU3SnSEbbWjrMK6BjTTlhAWCEHoQBakHgopi1C7RMqE8EnEM9L/LkC2DiC67yu7q3sZf3wLm+q+Cg1icKn6LD3x+MOwvGTlLQnxZ2YkbVtBU0piVel5EJI7Q0WgLDsUf";                  
+                         HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
+                        string access_token = "96ebB+Cl54eMPzp6OJ04gobbLtM17Pl7nTm7tRSMlWi0m/y3SF2HOIv1i+1dDUmnCBBDw7CggpvDAnZ68cxoar42k2qXGE34+zdgweU4H7IKhOxyFxJMhafVZg+FOQ08";                  
                         string origin = "https://wine.ai-cross.com";
                         string nbenterpriseguid = "49fd9414-666c-11e9-95e2-00163e0a2622";
+
                         request.Method = "GET";
                         request.ContentType = "application/json;charset=utf-8";
                         request.Headers.Add("access_token", access_token);
@@ -1124,12 +1096,12 @@ namespace ConsoleApp2
                             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                             Stream myResponseStream = response.GetResponseStream();
                             StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
-                            string retString = myStreamReader.ReadToEnd().ToString();
+                            string retString = myStreamReader.ReadToEnd().ToString();                                                                       
                             if (!string.IsNullOrEmpty(retString))
                             {
 
                                 var ss = getObjectByJson(retString);
-                                int id = ss[0].datas.id;
+                                id = ss[0].datas.id;
                                 string order_buyer_regno = ss[0].datas.order_buyer_regno;
                                 string order_buyer_name = ss[0].datas.order_buyer_name;
                                 string order_buyer_idcard = ss[0].datas.order_buyer_idcard;
@@ -1174,7 +1146,7 @@ namespace ConsoleApp2
             {
                     
                   string ur = string.Empty;
-                for (int i = 1430; i < 1543; i++)
+                for (int i = 1628; i < 1638; i++)
                 {
                     string Url = "https://wapi.ai-cross.com/order/";
                     string URL = Url + i;
@@ -1278,19 +1250,14 @@ namespace ConsoleApp2
                     try
                     {
                         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-
                         Stream stm = new System.IO.Compression.GZipStream(response.GetResponseStream(), System.IO.Compression.CompressionMode.Decompress);
                         StreamReader myStreamReader = new StreamReader(stm, Encoding.GetEncoding("gb2312"));
-
                         string retString = myStreamReader.ReadToEnd();
-
                         if (!string.IsNullOrEmpty(retString))
                         {
                             DateTime datetime;
                             string html = retString.Replace("null(", "").Replace(")", "");
                             List<string> info = GetHtmls("<tr>", "</tr>", html);
-
                             string datails = ReplaceHtmlTag(info[4]).Replace("\t", "").Replace("\n", "").Replace("\r", "").Replace(" ", "").Trim();
                             string strtempa = "第";
                             string strtempb = "期开";
@@ -1311,15 +1278,11 @@ namespace ConsoleApp2
                                 int Indexofyear = datatime.IndexOf(stryear);
                                 int Indexofmouth = datatime.IndexOf(strmouth);
                                 string mouth = datatime.Substring(Indexofyear + 1, Indexofmouth - Indexofyear - 1).Trim();
-
-
-
                                 string strmouthe = "月";
                                 string strday = "日";
                                 int Indexofmouthe = datatime.IndexOf(strmouthe);
                                 int Indexofday = datatime.IndexOf(strday);
                                 string day = datatime.Substring(Indexofmouthe + 1, Indexofday - Indexofmouthe - 1).Trim();
-
                                 string numberDatetime = Year + "-" + mouth + "-" + day;
                                 datetime = Convert.ToDateTime(numberDatetime);
                             }
@@ -1331,14 +1294,8 @@ namespace ConsoleApp2
                             string[] sArray = number.Split('：');
                             string numbere = sArray[1];
                             myStreamReader.Close();
-                            stm.Close();
-
-
-
-
-
+                            stm.Close();                       
                             String str4 = "INSERT INTO pailiewunak([id],[qishu],[Datetime],[number] ,[details],[dream],[url])VALUES('" + id + "','" + qishu + "','" + datetime + "','" + numbere + "','" + datails + "','" + ' ' + "','" + URL + "')";
-
                             sqlconection r2 = new sqlconection();
                             int d2 = r2.ExecuteUpdate(str4);//执行后会有返回值，是int类型，如果执行失败会返回0；
                             int d = 0;
