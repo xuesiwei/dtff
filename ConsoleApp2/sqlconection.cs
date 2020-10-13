@@ -10,7 +10,9 @@ namespace ConsoleApp2
 {
   public  class sqlconection
     {
-        private string MySqlCon = "Data Source=PV-11;Initial Catalog=DTcmsdb5;User ID=sa;Password=123456";             //在下面我会介绍这部分怎么填写;
+        public string MySqlCon = "Data Source=PV-11;Initial Catalog=DTcmsdb5;User ID=sa;Password=qq123456";
+      
+
 
     public DataTable ExecuteQuery(string sqlStr)      //用于查询；其实是相当于提供一个可以传参的函数，到时候写一个sql语句，存在string里，传给这个函数，就会自动执行。
         {
@@ -27,6 +29,7 @@ namespace ConsoleApp2
             con.Close();
             return dt;
         }
+      
         public int ExecuteUpdate(string sqlStr)      //用于增删改;
         {
             SqlConnection con = new SqlConnection(@MySqlCon);
@@ -40,6 +43,7 @@ namespace ConsoleApp2
             con.Close();
             return iud;
         }
+        
     }
 
 }

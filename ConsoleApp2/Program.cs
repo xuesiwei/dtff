@@ -19,6 +19,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using Log;
+using System.Timers;
+using System.Data.SqlClient;
+using System.Security.Cryptography;
+
 namespace ConsoleApp2
 {
     public class Program
@@ -27,21 +31,37 @@ namespace ConsoleApp2
         private static int _endedConnenctionCount = 0;
         private static int _failedConnectionCount = 0;
 
-
+        [STAThread]
         static void Main(string[] args)
         {
+            //System.Timers.Timer aTimer = new System.Timers.Timer();
+            //aTimer.Elapsed += new ElapsedEventHandler(TimeEvent);
+
+            //aTimer.Interval = 1000;
+
+            //aTimer.Enabled = true;
+
+            //Console.WriteLine("按回车键结束程序");
+
+            //Console.WriteLine(" 等待程序的执行．．．．．．");
+
+            //Console.ReadLine();
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             Program cc = new Program();
-            int a = 0;
+
             string path = "E:\\微信对账单.txt";
+
+
+
             //cc.ReadTxtContent(path);
             // SendRequestHwUserinfo();
             //SendRequestqqmember();
             // string url11 = "https://www.bilibili.com/video/av49401880";
             // cc.SaveAsWebImg(url11);
             //SendRequestplwduoxianc();
-              //SendRequestBLZinfo();
-        
+
+            // SendRequestBLZinfo();
+            //zhuchehao();
             //SendRequestBLZzhYanzheng();
             //Thread thread25yi = new Thread(new ThreadStart(obj.SendRequestqxc));
             //thread25yi.Start();
@@ -54,7 +74,8 @@ namespace ConsoleApp2
             //    }
             //}
             // SendRequestwms();
-          SendRequestwine();
+            //  SendRequestwine();
+
             string str = "160万";
             //Regex r = new Regex(".*(?=万)");
             //bool ismatch = r.IsMatch(str);
@@ -64,11 +85,19 @@ namespace ConsoleApp2
             //{
             //    result += mc[i];//匹配结果是完整的数字，此处可以不做拼接的
             //}
-          // SendRequestlichul();
+            // SendRequestlichul();
             //SendRequestmengceproyIP();
-          // SendRequestqxc();
+
+            //SendRequestqxc();
             // SendRequestproy();
-         // SendRequestplw();
+
+            //while (true)
+            //{
+            //    withdrow();
+            //}
+            //SendRequestplw();
+            // SendRequestPHPapi();
+            PostJson();
             // SendRequestmengce();
             Console.Read();
             return;
@@ -100,10 +129,76 @@ namespace ConsoleApp2
 
             //  }
         }
+
+        public static void withdrow()
+        {
+            try
+            {
+                DirectoryInfo info = new DirectoryInfo(@"F:\weixin\WeChat Files\x54073416\FileStorage\Image\2019-11\");
+                FileInfo[] files = info.GetFiles();
+                DateTime time = new DateTime(1900, 1, 1);
+                FileInfo newestFile = null;
+                foreach (FileInfo f1 in files)
+                {
+                    if (f1.LastWriteTime > time)
+                    {
+                        time = f1.LastWriteTime;
+                        newestFile = f1;
+
+                    }
+                }
+                string pathold = newestFile.FullName;
+                string newpath = @"F:\weixin\WeChat Files\x54073416\FileStorage\Image\2019-11withdraw\" + newestFile;
+                FileInfo fi = new FileInfo(pathold);
+                if (fi.Exists)
+                {
+                    fi.CopyTo(newpath);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+
+        }
+        private static void TimeEvent(object source, ElapsedEventArgs e)
+
+
+
+        {
+            int intHour = DateTime.Now.Hour;
+
+            int intMinute = DateTime.Now.Minute;
+
+            int intSecond = DateTime.Now.Second;
+            int iHour = 10;
+
+            int iMinute = 08;
+
+            int iSecond = 00;
+
+            if (intSecond == iSecond)
+
+            {
+                SendRequestqxc();
+                SendRequestplw();
+                Console.WriteLine("七星彩！");
+
+            }
+            if (intHour == iHour && intMinute == iMinute && intSecond == iSecond)
+
+            {
+                SendRequestplw();
+                Console.WriteLine("排列五！");
+
+            }
+
+        }
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Console.WriteLine(e.ExceptionObject.ToString());
-            Console.ReadKey();    
+            Console.ReadKey();
         }
         //冒泡排序方法，从小到大排，虽然很多冒泡排序都是从大到小，
         //可是我就想这么排，你能怎么着我。
@@ -197,7 +292,7 @@ namespace ConsoleApp2
             strText = System.Text.RegularExpressions.Regex.Replace(strText, "&[^;]+;", "");
             if (length > 0 && strText.Length > length)
                 return strText.Substring(0, length);
-                return strText;
+            return strText;
         }
         private static void SendRequest3()
         {
@@ -252,6 +347,9 @@ namespace ConsoleApp2
             {
                 string ur = string.Empty;
                 int id = 1;
+
+
+
                 id++;
                 string Url = "https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list?tdsourcetag=s_pcqq_aiomsg";
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
@@ -267,6 +365,8 @@ namespace ConsoleApp2
                     StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("gb2312"));
                     string retString = myStreamReader.ReadToEnd();
                     if (!string.IsNullOrEmpty(retString))
+
+
                     {
                         DateTime datetime;
                         string html = retString.Replace("null(", "").Replace(")", "");
@@ -395,6 +495,9 @@ namespace ConsoleApp2
                         {
                             continue;
                         }
+
+
+
                     }
                     id++;
                     string Url = "http://kaijiang.500.com/shtml/qxc/";
@@ -402,15 +505,36 @@ namespace ConsoleApp2
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
                     request.Method = "POST";
                     request.ContentType = "application/json;charset=gb2312";
-                    // Stream myRequestStream = request.GetRequestStream();
-                    //StreamWriter myStreamWriter = new StreamWriter(myRequestStream, Encoding.GetEncoding("gb2312"));          
-                    // myStreamWriter.Close();
+                    Stream myRequestStream = request.GetRequestStream();
+                    StreamWriter myStreamWriter = new StreamWriter(myRequestStream, Encoding.GetEncoding("gb2312"));
+                    myStreamWriter.Close();
+                    Stream stm;
+                    StreamReader myStreamReader;
+                    string retString = string.Empty;
                     try
                     {
                         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                        Stream stm = new System.IO.Compression.GZipStream(response.GetResponseStream(), System.IO.Compression.CompressionMode.Decompress);
-                        StreamReader myStreamReader = new StreamReader(stm, Encoding.GetEncoding("gb2312"));
-                        string retString = myStreamReader.ReadToEnd();
+                        //Stream myStreamReader = response.GetResponseStream();
+                        //StreamReader stm = new StreamReader(myStreamReader, Encoding.GetEncoding("gb2312"));
+                        try
+                        {
+                            stm = new System.IO.Compression.GZipStream(response.GetResponseStream(), System.IO.Compression.CompressionMode.Decompress);
+                            myStreamReader = new StreamReader(stm, Encoding.GetEncoding("gb2312"));
+
+                            retString = myStreamReader.ReadToEnd();
+                        }
+
+                        catch
+                        {
+
+                            stm = response.GetResponseStream();
+                            myStreamReader = new StreamReader(stm, Encoding.GetEncoding("gb2312"));
+                            retString = myStreamReader.ReadToEnd();
+
+                        }
+                        //Stream stm = new System.IO.Compression.GZipStream(response.GetResponseStream(), System.IO.Compression.CompressionMode.Decompress);
+                        //StreamReader myStreamReader = new StreamReader(stm, Encoding.GetEncoding("gb2312"));
+                        //string retString = myStreamReader.ReadToEnd();
                         if (!string.IsNullOrEmpty(retString))
                         {
                             string html = retString.Replace("null(", "").Replace(")", "");
@@ -452,7 +576,7 @@ namespace ConsoleApp2
                                 return;
                             }
 
-                            string sql6 = "SELECT dream FROM mengce where number=left(" + numbere + ",4)";
+                            string sql6 = "SELECT dream FROM mengce where number=left('" + numbere + "',4)";
                             sqlconection r6 = new sqlconection();
                             DataTable d6 = new DataTable();
                             d6 = r6.ExecuteQuery(sql6);
@@ -492,6 +616,10 @@ namespace ConsoleApp2
         /// 将json数据转换成实体类  
         /// </summary>
         /// <returns></returns>
+        /// 
+
+
+
         private static List<Root> getObjectByJson(string jsonString)
         {
             // 实例化DataContractJsonSerializer对象，需要待序列化的对象类型
@@ -588,36 +716,36 @@ namespace ConsoleApp2
                         Dictionary<string, string> parameters = new Dictionary<string, string>();
                         parameters.Add("IPT_LOGINUSERNAME", "101002133035");
                         parameters.Add("IPT_LOGINPASSWORD", "000000");
-                     
+
                         string postdata = CreatePostData(parameters);
-                     
-                        
-                        string Url = "http://eol.zhbit.com/homepage/common/login.jsp?"+ postdata;
-                       
+
+
+                        string Url = "http://eol.zhbit.com/homepage/common/login.jsp?" + postdata;
+
                         int id = 1;
-                      
+
                         HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
-                     
-                       
+
+
                         request.Method = "GET";
-                     
+
 
                         try
                         {
                             //request.AllowAutoRedirect = false;
                             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                          
-                           
+
+
                             Stream myResponseStream1 = response.GetResponseStream();
                             StreamReader myStreamReader1 = new StreamReader(myResponseStream1, Encoding.GetEncoding("gbk"));
                             string retString1 = myStreamReader1.ReadToEnd().ToString();
                             string cookie = response.Headers.Get("Set-Cookie");
                             //string cookie = "JSESSIONID=8F32DAADE4BB5CD825ABF514181CD069";
-                            string[]cookies = cookie.Split(';');
+                            string[] cookies = cookie.Split(';');
                             string Cookie = cookies[0];
-                            string Url2= "http://eol.zhbit.com/popups/viewstudent_info.jsp?SID="+29805+"";
+                            string Url2 = "http://eol.zhbit.com/popups/viewstudent_info.jsp?SID=" + 29805 + "";
                             HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(Url2);
-                           
+
                             request2.Method = "GET";
                             request2.ContentType = "text/html;charset=gbk";
                             request2.Headers.Add("Cookie", Cookie);
@@ -657,7 +785,7 @@ namespace ConsoleApp2
                             }
                             myStreamReader.Close();
                         }
-                         
+
                         catch (Exception ex)
                         {
                             try
@@ -697,8 +825,8 @@ namespace ConsoleApp2
                 sqlconection r2 = new sqlconection();
                 string ur = string.Empty;
                 List<string> mList = new List<string>();
-                string sql6 = "select userid  from BLZitStudentInfo";        
-                DataTable d6 = new DataTable();            
+                string sql6 = "select userid  from BLZitStudentInfo";
+                DataTable d6 = new DataTable();
                 d6 = r2.ExecuteQuery(sql6);
                 var rowssm = d6.Rows.Cast<DataRow>().Select(e => e.Field<int>("userid"));
                 foreach (var item in rowssm)
@@ -708,10 +836,13 @@ namespace ConsoleApp2
                     mList.Add(ex);
 
                 }
-                for (int i = 57318; i<100000; i++)
+                for (int i = 57318; i < 100000; i++)
                 {
                     if (!mList.Contains(i.ToString()))
                     {
+
+
+
                         string Url = "http://eol.zhbit.com/popups/viewstudent_info.jsp?SID=" + i + "";
                         int id = 1;
                         string cookieStr = "JSESSIONID=1A86FB3616CC3F5C16EC4F78B30F766C";
@@ -725,7 +856,9 @@ namespace ConsoleApp2
                         {
 
                             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                           
+
+
+
                             Stream myResponseStream = response.GetResponseStream();
                             StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("gbk"));
                             string retString = myStreamReader.ReadToEnd().ToString();
@@ -751,11 +884,11 @@ namespace ConsoleApp2
                                 }
                                 else
                                 {
-                                    Console.WriteLine("未有该用户{0}",i);
+                                    Console.WriteLine("未有该用户{0}", i);
                                     continue;
-                                 
+
                                 }
-                               
+
                             }
                             myStreamReader.Close();
                         }
@@ -789,7 +922,181 @@ namespace ConsoleApp2
             {
                 Console.WriteLine(ex.Message);
             }
-        }              
+        }
+
+        ///
+        /// 去除字符串中的中文
+        ///
+        ///
+        ///
+        public static string DeleteChineseWord(string str)
+        {
+            string retValue = str;
+            if (System.Text.RegularExpressions.Regex.IsMatch(str, @"[\u4e00-\u9fa5]"))
+            {
+                retValue = string.Empty;
+                var strsStrings = str.ToCharArray();
+                for (int index = 0; index < strsStrings.Length; index++)
+                {
+                    if (strsStrings[index] >= 0x4e00 && strsStrings[index] <= 0x9fa5)
+                    {
+                        continue;
+                    }
+                    retValue += strsStrings[index];
+                }
+            }
+            return retValue;
+        }
+
+        /// <summary>
+        /// 保留中文字符
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string KeepChinese(string str)
+        {
+            //声明存储结果的字符串
+            string chineseString = "";
+
+
+            //将传入参数中的中文字符添加到结果字符串中
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i] >= 0x4E00 && str[i] <= 0x9FA5) //汉字
+                {
+                    chineseString += str[i];
+                }
+            }
+
+
+            //返回保留中文的处理结果
+            return chineseString;
+        }
+        private static void zhuchehao()
+
+        {
+            try
+            {
+                
+                sqlconection r2 = new sqlconection();
+                string ur = string.Empty;
+                List<string> mList = new List<string>();
+                string sql6 = "select *  from zhucehao";
+                DataTable d6 = new DataTable();
+                d6 = r2.ExecuteQuery(sql6);
+                //  var rowppz = d6.Rows.Cast<DataRow>().Select(e => e.Field<string>("pinpai"));
+                 
+
+                int id = 0;
+               // var rowpplx = d6.Rows.Cast<DataRow>().Select(e => e.Field<string>("pinpaileixing"));
+                foreach(DataRow row in d6.Rows)
+                {
+                    string pp = row[2].ToString();
+                   // string pplx = row[1].ToString();
+                    string guojia = row[2].ToString();               
+                    id++;
+
+                    string str = string.Empty;
+                    int ID = id;
+                    string pingpai = row[2].ToString();
+                    string pinpaiy = row[3].ToString();
+                    string guojia2 =string.Empty;
+                    string SBZHUEHAO = string.Empty;
+                    string guojia4 = string.Empty;
+                    string shuzi = string.Empty;
+                    string PINGPAIY = string.Empty;
+                    string sql8 = "select *  from guojia where pinpai like" + "'" + pp + "%'";
+                    DataTable d8 = new DataTable();
+                    d8 = r2.ExecuteQuery(sql8);
+                    if (d8 != null && d8.Rows.Count > 0)
+                    {
+                         string guojia3 = d8.Rows[0]["原产国"].ToString();
+                         shuzi = System.Text.RegularExpressions.Regex.Replace(guojia3, @"[^0-9]+", "");
+
+                        SBZHUEHAO = shuzi + row[0].ToString() + row[5].ToString();
+                        guojia4 = KeepChinese(guojia3);
+                    }
+                    else
+                    {
+                        SBZHUEHAO = "";
+                    }
+
+                    string PINGPAIZ = pingpai;
+                    PyHash szm = new PyHash();
+                    string PINGPAIZS ;
+                    PINGPAIY = pinpaiy;
+                    string Guojia = guojia4;
+                    string SBLEIXING = "39";
+                    string PPLX = "境外品牌（其它）";
+                    string ZZLX = "商品注册证";
+                    string bTIME = "2015/5/25";
+                    string gTIME = "2025/5/26";
+                    string SBZCR = pingpai;
+
+
+
+                    PINGPAIZS = PINGPAIZ.Substring(0, 1);
+                    char[] c = PINGPAIZS.ToCharArray();
+                    string PBSZMs = szm.GetPinYin(c[0]); ;
+                    string PBSZM = PBSZMs.Substring(0, 1).ToUpper();
+                    string SBQD = "无";
+                    int result = 0;
+
+                    try
+                    {
+                           string MySqlCon = "Data Source=PV-11;Initial Catalog=DTcmsdb5;User ID=sa;Password=qq123456";
+                           SqlConnection conn = new SqlConnection(MySqlCon);
+                           conn.Open();
+
+        string sqlStr = "insert into DSSJUB(PINGPAIZ,PINGPAIY,Guojia,SBZHUEHAO,SBLEIXING,PPLX,ZZLX,bTIME,gTIME,SBZCR,PBSZM,SBQD) values(@PINGPAIZ,@PINGPAIY,@Guojia,@SBZHUEHAO,@SBLEIXING,@PPLX,@ZZLX,@bTIME,@gTIME,@SBZCR,@PBSZM,@SBQD)";
+                                     SqlCommand cmd = new SqlCommand(sqlStr, conn);
+                        SqlParameter[] parames = {
+
+         new SqlParameter("@PINGPAIZ",PINGPAIZ),
+         new SqlParameter("@PINGPAIY",PINGPAIY),
+         new SqlParameter("@Guojia",Guojia),
+         new SqlParameter("@SBZHUEHAO",SBZHUEHAO),
+         new SqlParameter("@SBLEIXING",SBLEIXING),
+         new SqlParameter("@PPLX",PPLX),
+         new SqlParameter("@ZZLX",ZZLX),
+         new SqlParameter("@bTIME",bTIME),
+         new SqlParameter("@gTIME",gTIME),
+         new SqlParameter("@SBZCR",SBZCR),
+         new SqlParameter("@PBSZM",PBSZM),
+         new SqlParameter("@SBQD",SBQD)
+                                  };
+                        
+             cmd.Parameters.AddRange(parames);
+                        
+             result = cmd.ExecuteNonQuery();
+
+
+                        //String str4 = "INSERT INTO DSSJUB([PINGPAIZ],[PINGPAIY],[GUOJIA],[SBZHUEHAO],[SBLEIXING],[PPLX],[ZZLX],[bTIME] ,[gTIME],[SBZCR],[PBSZM],[SBQD])VALUES" +
+                        //   "('" + PINGPAIZ + "','" + PINGPAIY + "','" + Guojia + "','" + SBZHUEHAO + "','" + SBLEIXING + "','" + PPLX + "','" + ZZLX + "','" + bTIME + "','" + gTIME + "','" + SBZCR + "','" + PBSZM + "','" + SBQD + "')";
+
+                        //int d2 = r2.ExecuteUpdate(str4);
+                        Console.WriteLine(id);
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                        Console.WriteLine(pingpai);
+                    }
+                    
+
+                }
+
+
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+
+
+
+        }
         private static void SendRequestHwUserinfo()
 
         {
@@ -984,18 +1291,18 @@ namespace ConsoleApp2
                     id = Convert.ToInt16(d3.Rows[0]["id"]);
                 }
               //
-                for (int i =1; i < 1000; i++)
+                for (int i =1; i < 2000; i++)
                 {
                     Thread.Sleep(1000);
                     if (i % 20 == 0)
                     {
                         int st1 = i-20;
                         int end1 = i;
-                        string qqgropunumber="54030157";
-                        string Url = "https://qun.qq.com/cgi-bin/qun_mgr/search_group_members?&gc="+ qqgropunumber + "&st=" + st1 + "&end=" + end1 + "&sort=0&bkn=1237445291";
+                        string qqgropunumber= "121547051";
+                        string Url = "https://qun.qq.com/cgi-bin/qun_mgr/search_group_members?&gc="+ qqgropunumber + "&st=" + st1 + "&end=" + end1 + "&sort=0&bkn=939018797";
                         try
                         {
-                            string cookieStr = "pgv_pvi=586314752; RK=mJI4uh6JSZ; ptcz=53d7c290c34862af168da5a2dd3ab3371994226e562008b71a7337592c06bf6c; pgv_pvid=8303468981; pac_uid=0_b1cc3f422dc85; tvfe_boss_uuid=50a22e41292cd555; traceid=fcfa927c09; _qpsvr_localtk=0.055369715164580224; pgv_si=s4111436800; uin=o0540734160; skey=@najBJeUBe; ptisp=ctc; p_uin=o0540734160; pt4_token=3R6u1oHawbpnk5xGJ4VyTFxjoWlGSQNJJQC8bJCWuuo_; p_skey=3eq4DWmvvkO-7zQkqKB9ypWpmDrGtVGbVmK-1p9glsg_";
+                            string cookieStr = "pgv_pvi=586314752; RK=mJI4uh6JSZ; ptcz=53d7c290c34862af168da5a2dd3ab3371994226e562008b71a7337592c06bf6c; pgv_pvid=8303468981; tvfe_boss_uuid=50a22e41292cd555; o_cookie=540734160; pac_uid=1_540734160; _gcl_au=1.1.231089453.1561362132; _ga=GA1.2.469681840.1561362132; pt_235db4a7=uid=X0tFcEviEqv0V9v6cuF9YQ&nid=1&vid=CgqVN9EKS7F-MSsOG5AwoQ&vn=1&pvn=1&sact=1561362158655&to_flag=0&pl=0KzaISwJA-wYoyVB1nkjpQ*pt*1561362132322; pgv_si=s7114341376; pgv_info=ssid=s8169310290; ts_uid=888827844; _qpsvr_localtk=0.8413444478296574; uin=o0540734160; skey=@mku0yxK6Y; ptisp=ctc; p_uin=o0540734160; pt4_token=QD5loV-pObpH80wEetSolqUwBdJVtw55jJOFkx1odEg_; p_skey=c0SxsJWnrjTxo-pj1anL77S86ZlkhZ4hFrb8kiqxKnQ_; ts_refer=xui.ptlogin2.qq.com/cgi-bin/xlogin; traceid=9f700deb27; enc_uin=AUif_lticvSvjZCOiO6N1g; ts_last=qun.qq.com/member.html";
                             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
                             request.Method = "POST";
                             request.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
@@ -1031,6 +1338,7 @@ namespace ConsoleApp2
                                            point + "','" + level + "','" + nick + "','" + Url + "','"+ qqgropunumber + "')";
                                         sqlconection r2 = new sqlconection();
                                         int d2 = r2.ExecuteUpdate(str4);
+                                     
                                         Console.WriteLine(id);
                                     }
                                     myStreamReader.Close();
@@ -1061,7 +1369,163 @@ namespace ConsoleApp2
 
             }
         }
+
+
+        protected int m_timestamp;
+
+    
+        private static void SendRequestPHPapi()
+
+        {
+
+            try
+            {
+
+                TimeSpan ts = DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                 Convert.ToInt64(ts.TotalSeconds).ToString();
+                Dictionary<string, string> sign_data = new Dictionary<string, string> {
+                 {"method","get.goods.stock"},{"format","JSON"},{"timestamp", Convert.ToInt64(ts.TotalSeconds).ToString() },
+                    { "vendorCode","44"}
+                  };
+                string key = "ce73caefc4d594010675e1b843bf7eac";
+               string signData=SignTopRequest(sign_data, key,true);
+
+                string url = "http://39.108.11.201/tripartite/v1/rest";
+                Dictionary<string, string> UseApi = new Dictionary<string, string> {
+                 {"method","get.goods.stock"},{"format","JSON"},{"timestamp", Convert.ToInt64(ts.TotalSeconds).ToString() },
+                    { "vendorCode","44"},{"sign_data",signData},{"goods_sku","2A909C5142411"},
+                    { "goods_type","2"},{"is_combination","0"}
+                  };
+                string jsonpara= JsonConvert.SerializeObject(UseApi);
+                Post(url, UseApi);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        //MD5排序加密
+        public static string SignTopRequest(IDictionary<string, string> parameters, string secret, bool qhs)
+        {
+            // 第一步：把字典按Key的字母顺序排序
+            IDictionary<string, string> sortedParams = new SortedDictionary<string, string>(parameters);
+            IEnumerator<KeyValuePair<string, string>> dem = sortedParams.GetEnumerator();
+
+            // 第二步：把所有参数名和参数值串在一起
+            StringBuilder query = new StringBuilder(secret);
+            string dd=string.Empty;
+            while (dem.MoveNext())
+            {
+                string key = dem.Current.Key;
+                string value = dem.Current.Value;
+                if (!string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(value))
+                {
+                    query.Append(key).Append(value);
+                }
+            }
+            if (qhs)
+            {
+               dd= query.Append(secret).ToString();
+            }
+
+            // 第三步：使用MD5加密
+
+            MD5 md5 = MD5.Create();
+            byte[] data = md5.ComputeHash(Encoding.Default.GetBytes(dd));
+            var sb = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sb.Append(data[i].ToString("X2"));
+            }
+            return sb.ToString();
+
+        }
+
       
+
+        /// <summary>
+        /// 指定Post地址使用Get 方式获取全部字符串
+        /// </summary>
+        /// <param name="url">请求后台地址</param>
+        /// <returns></returns>
+        public static string Post(string url, Dictionary<string, string> dic)
+        {
+            string result = "";
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+            req.Method = "POST";
+            req.ContentType = "application/x-www-form-urlencoded";
+            #region 添加Post 参数
+            StringBuilder builder = new StringBuilder();
+            int i = 0;
+            foreach (var item in dic)
+            {
+                if (i > 0)
+                    builder.Append("&");
+                builder.AppendFormat("{0}={1}", item.Key, item.Value);
+                i++;
+            }
+            byte[] data = Encoding.UTF8.GetBytes(builder.ToString());
+            req.ContentLength = data.Length;
+            using (Stream reqStream = req.GetRequestStream())
+            {
+                reqStream.Write(data, 0, data.Length);
+                reqStream.Close();
+            }
+            #endregion
+            HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+            Stream stream = resp.GetResponseStream();
+            //获取响应内容
+            using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+            {
+                result = reader.ReadToEnd();
+            }
+            return result;
+        }
+        /// <summary>
+        /// 指定Post地址使用Get 方式获取全部字符串
+        /// </summary>
+        /// <param name="url">请求后台地址</param>
+        /// <returns></returns>
+        public static string PostJson()
+        {
+            TimeSpan ts = DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            string timestamp=Convert.ToInt64(ts.TotalSeconds).ToString();
+            Dictionary<string, string> sign_data = new Dictionary<string, string> {
+                 {"method","get.goods.stock"},{"format","JSON"},{"timestamp", timestamp },
+                    { "vendorCode","45"}
+                  };
+          //  string key = "ce73caefc4d594010675e1b843bf7eac";
+            string key = "87p02e2n09dl1kzuegk834zbboltu800";
+            string signData = SignTopRequest(sign_data, key, true);
+
+          
+            Dictionary<string, string> UseApi = new Dictionary<string, string> {
+                 {"method","get.goods.stock"},{"format","JSON"},{"timestamp",timestamp},
+                    { "vendorCode","45"},{"sign_data",signData},{"goods_sku","2A909C5142411"},
+                    { "goods_type","2"},{"is_combination","0"}
+                  };
+            string jsonpara = JsonConvert.SerializeObject(UseApi);
+            string result = "";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://39.108.11.201/tripartite/v1/rest");
+            httpWebRequest.ContentType = "application/x-www-form-urlencoded";
+            httpWebRequest.Method = "POST";
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                string json = jsonpara;
+
+                streamWriter.Write(json);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                 result = streamReader.ReadToEnd();
+            }
+            return result;
+        }
         private static void SendRequestwine()
 
         {
@@ -1074,14 +1538,14 @@ namespace ConsoleApp2
                 DataTable d3 = new DataTable();
                 d3 = r3.ExecuteQuery(sql3);
                 int id = Convert.ToInt16(d3.Rows[0]["id"]);
-                for (int i = id+1; i < id+10; i++)
+                for (int i = id+1; i < id+20; i++)
                 {
                     string Url = "https://wapi.ai-cross.com/order/";
                     string URL = Url + i;
                     try
                     {
                          HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
-                        string access_token = "96ebB+Cl54eMPzp6OJ04gobbLtM17Pl7nTm7tRSMlWi0m/y3SF2HOIv1i+1dDUmnCBBDw7CggpvDAnZ68cxoar42k2qXGE34+zdgweU4H7IKhOxyFxJMhafVZg+FOQ08";                  
+                        string access_token = "WyivnJ0hC6wCqcVBEFTiSWPLx2sV55KW1r4vGLdf3gOLULsDm21vNzojidb6TEu4IItIgk4L1xCSQxuOHogc+osAzPh9m9bJD0LRxaFm9KRwytS6sa19ZWRKkYwF/FDb";                  
                         string origin = "https://wine.ai-cross.com";
                         string nbenterpriseguid = "49fd9414-666c-11e9-95e2-00163e0a2622";
 
@@ -1357,11 +1821,12 @@ namespace ConsoleApp2
                 d3 = r3.ExecuteQuery(sql3);
                 int id = Convert.ToInt16(d3.Rows[0]["id"]);
                 int qishuj=Convert.ToInt16(d3.Rows[0]["qishu"]);
-                for (int j= qishuj; j <qishuj+10; j++)
+                for (int j= qishuj; j < qishuj + 10; j++)
                 {
                     if (j >= 8200 & j < 10000)
                     {
                         ur = "0" + j + ".shtml";
+
 
                         string uu = Convert.ToString(j).Substring(Convert.ToString(j).Length - 3, 3);
                         if (Convert.ToInt32(uu) > 367)
@@ -1375,6 +1840,7 @@ namespace ConsoleApp2
                         ur = j + ".shtml";
                         string uu = Convert.ToString(j).Substring(Convert.ToString(j).Length - 3, 3);
                         if (Convert.ToInt32(uu) >367)
+
                         {
                             continue;
                         }
@@ -1384,20 +1850,35 @@ namespace ConsoleApp2
                     string Url = "http://kaijiang.500.com/shtml/plw/";
                     string URL = Url + ur;
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
+                    request.ContentLength = 0;
                     request.Method = "POST";
                     request.ContentType = "application/json;charset=gb2312";
-                    // Stream myRequestStream = request.GetRequestStream();
-                    //StreamWriter myStreamWriter = new StreamWriter(myRequestStream, Encoding.GetEncoding("gb2312"));          
+                    string retString=string.Empty;
+                    StreamReader myStreamReader;
+                    Stream stm;
+                    //Stream myRequestStream = request.GetRequestStream();
+                    //StreamWriter myStreamWriter = new StreamWriter(myRequestStream, Encoding.GetEncoding("gb2312"));
                     // myStreamWriter.Close();
                     try
                     {
-                        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                        HttpWebResponse response = (HttpWebResponse)request.GetResponse();             
+                        try
+                        {
+                            stm = new System.IO.Compression.GZipStream(response.GetResponseStream(), System.IO.Compression.CompressionMode.Decompress);
+                            myStreamReader = new StreamReader(stm, Encoding.GetEncoding("gb2312"));
+                            retString = myStreamReader.ReadToEnd();
+                          
+                        }
+                        catch
+                        {
+                            stm = response.GetResponseStream();
+                            myStreamReader = new StreamReader(stm, Encoding.GetEncoding("gb2312"));
+                            retString = myStreamReader.ReadToEnd();
+                          
 
+                        }
 
-                        Stream stm = new System.IO.Compression.GZipStream(response.GetResponseStream(), System.IO.Compression.CompressionMode.Decompress);
-                        StreamReader myStreamReader = new StreamReader(stm, Encoding.GetEncoding("gb2312"));
-
-                        string retString = myStreamReader.ReadToEnd();
+                       
 
                         if (!string.IsNullOrEmpty(retString))
                         {

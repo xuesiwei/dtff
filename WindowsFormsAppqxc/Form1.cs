@@ -126,6 +126,8 @@ namespace WindowsFormsAppqxc
             string[] strnumber2;         
             strnumber2 = listr.ToArray();
             List<string> list = Route(str1.Length, ref strnumber2);
+
+
             List<string> exist = new List<string>();
             foreach(var item in list)
             {    if (!exist.Contains(item))
@@ -135,6 +137,7 @@ namespace WindowsFormsAppqxc
                 else
                 {
                     continue;
+
                 }
             }
             string strArraynumber = string.Join("\n", exist);
