@@ -88,7 +88,7 @@ namespace ConsoleApp2
             // SendRequestlichul();
             //SendRequestmengceproyIP();
 
-            //SendRequestqxc();
+            SendRequestqxc();
             // SendRequestproy();
 
             //while (true)
@@ -97,7 +97,9 @@ namespace ConsoleApp2
             //}
             //SendRequestplw();
             // SendRequestPHPapi();
-            PostJson();
+
+           // SendTuPictureErjinzhi();
+            //PostJson();
             // SendRequestmengce();
             Console.Read();
             return;
@@ -474,8 +476,9 @@ namespace ConsoleApp2
                 DataTable d3 = new DataTable();
                 d3 = r3.ExecuteQuery(sql3);
                 int id = Convert.ToInt16(d3.Rows[0]["id"]);
+               // int qishuj = 21001;
                 int qishuj = Convert.ToInt16(d3.Rows[0]["qishu"]);
-                for (int j = qishuj; j < qishuj + 5; j++)
+                for (int j = qishuj; j < qishuj + 20; j++)
                 {
                     if (j >= 8000 & j < 10000)
                     {
@@ -1603,6 +1606,49 @@ namespace ConsoleApp2
 
             }
         }
+
+        private static void SendTuPictureErjinzhi()
+
+        {
+         
+               
+                    string URL = "https://www.haijiugo.com/led/v0/order/pay-code";
+               
+                    try
+                    {
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
+                    
+                       // string origin = "https://wine.ai-cross.com";
+                      //  string nbenterpriseguid = "49fd9414-666c-11e9-95e2-00163e0a2622";
+
+                        request.Method = "GET";
+                        request.ContentType = "application/json;charset=utf-8";
+                      //  request.Headers.Add("access_token", access_token);
+                    //    request.Referer = "https://wine.ai-cross.com/home/index.html";
+                    //    request.Headers.Add("origin", origin);
+                    //    request.Headers.Add("nb-enterprise-guid", nbenterpriseguid);
+                        try
+                        {
+                            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                            Stream myResponseStream = response.GetResponseStream();
+                            StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
+                            string retString = myStreamReader.ReadToEnd().ToString();
+                        
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+
+                
+            
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
         private static void SendRequestwms()
 
         {
@@ -1820,8 +1866,9 @@ namespace ConsoleApp2
                 DataTable d3 = new DataTable();
                 d3 = r3.ExecuteQuery(sql3);
                 int id = Convert.ToInt16(d3.Rows[0]["id"]);
+                //int qishuj = 21001;
                 int qishuj=Convert.ToInt16(d3.Rows[0]["qishu"]);
-                for (int j= qishuj; j < qishuj + 10; j++)
+                for (int j= qishuj; j < qishuj + 100; j++)
                 {
                     if (j >= 8200 & j < 10000)
                     {
